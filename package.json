@@ -1,0 +1,23 @@
+{
+  "name": "stock-watch",
+  "version": "0.0.0",
+  "description": "Basic Read Me:",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JHM90/saturday.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JHM90/saturday/issues"
+  },
+  "homepage": "https://github.com/JHM90/saturday#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
