@@ -1,23 +1,35 @@
 {
-  "name": "stock-watch",
-  "version": "0.0.0",
-  "description": "Basic Read Me:",
-  "main": "app.js",
+  "name": "stockwatchers",
+  "version": "1.0.0",
+  "description": "An application that users can use to keep track of their favorite stocks",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "mocha",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JHM90/saturday.git"
+    "url": "git+https://github.com/stockwatchers/saturday.git"
   },
-  "author": "",
+  "author": "KrisHughes, JasonMontoya, JamesMason, JoshuaHo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JHM90/saturday/issues"
+    "url": "https://github.com/stockwatchers/saturday/issues"
   },
-  "homepage": "https://github.com/JHM90/saturday#readme",
+  "homepage": "https://github.com/stockwatchers/saturday#readme",
+  "devDependencies": {
+    "chai": "3.5.0",
+    "gulp": "3.9.0",
+    "gulp-eslint": "1.1.1",
+    "gulp-mocha": "2.2.0"
+  },
   "dependencies": {
-    "bootstrap": "^3.3.6"
+    "authenticat": "1.0.2",
+    "body-parser": "1.14.2",
+    "express": "4.13.4",
+    "mongoose": "4.3.7"
   }
 }
