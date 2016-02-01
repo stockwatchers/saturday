@@ -50,6 +50,7 @@ authRouter.post('/signup', jsonParser, (req, res) => {
 
 //Signin
 authRouter.get('/signin', basicHTTP, (req, res) => {
+  //Log in with username and Password
   Profile.findOne({username : req.basicHTTP.username}, (err, user) => {
     if(err) {
       console.log(err);
