@@ -9,6 +9,7 @@ var authRouter = module.exports = exports = express.Router();
 //Signup
 authRouter.post('/signup', jsonParser, (req, res) => {
   var newProfile = new Profile();
+  console.log(req.body);
   //Username must be entered and password must have length of 8
   if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
     return res.status(400).json({msg: 'Invalid username or password'});
