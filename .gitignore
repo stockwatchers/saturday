@@ -3,3 +3,4 @@
 **/*.sw?
 **/public/node_moduels/
 **/credentials/
+**/client_key_secret/
