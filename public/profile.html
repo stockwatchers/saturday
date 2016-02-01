@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="lib/vendor/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="lib/vendor/simple-sidebar.css" rel="stylesheet">
+
+    <style type="text/css">
+        html {font-size: .75em;}
+        body{
+            background-color: #fff;
+            font: 1em Arial;
+            margin-left: -10px;}
+        .stockIn{
+            width:220px; height: 60px;
+            padding-left: 4px;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        h1{
+            margin-left: 18px;
+            font-weight: 700;
+        }
+        h1 button{
+            font-size: .5em;
+            font-weight: 400;
+        }
+        .graphRel{
+            position: relative;
+        }
+        .graph p{
+            display: inline-block;
+            margin: 15px 20px 25px;
+            font-weight: bold;
+        }
+        .graph p span{
+            font-weight: normal;
+        }
+        .graph p:first-of-type{
+            margin-left: 18px;
+        }
+        .range{
+            position: absolute;
+            bottom: -50px;    left:40px;
+        }
+        .range button{
+            font-size: 16px;
+            border: 2px solid black;
+            margin: 0 4px;
+            transition: all 200ms ease-in;
+        }
+        .range button:hover{
+            background-color: #ccc;
+        }
+
+        path {
+            stroke: steelblue;
+            stroke-width: 3;
+            fill: none;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: grey;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+        .area {
+            fill: lightsteelblue;
+              stroke-width: 0;
+        }
+        .shadow{
+            font-weight: 700;
+            font-size: 1.25em;
+        }
+
+        </style>
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#" style="font-size:1.5em;margin-top:30px;">
+                        Stock Watch 1.0
+                    </a>
+                </li>
+                <li style="font-size:18px;color:#31B0D5">
+                    WELCOME: dayTrader1
+                </li>
+                <li>
+                    <a href="#"></a>
+                </li>
+                <li>
+                    <a href="#" style="font-weight:bold;font-size:1.5em">Portfolio Overview</a>
+                </li>
+                <li>
+                    <a href="#"> FACEBOOK (FB)</a>
+                </li>
+                <li>
+                    <a href="#"> APPLE (APPL)</a>
+                </li>
+                <li>
+                    <a href="#"> TESLA (TSLA)</a>
+                </li>
+                <li>
+                    <a href="#"> GOOGLE (GOOG)</a>
+                </li>
+                <li>
+                    <a href="#"> MICROSOFT (MS)</a>
+                </li>
+                <li>
+                    <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row graph graphRel" id="body">
+
+                            <h1>TESLA (TSLA)  <button>hide graph</button></h1>
+
+                            <p>OPEN: <span>35.26</span></p><p>HI: <span>38.47</span></p><p>LOW: <span>35.26</span></p><p>CLOSE: <span>36.47</span> </p><p>VOLUME: <span>232323</span></p><p>CHANGE: <span>1.21</span></p>
+
+                            <!-- load the d3.js library -->
+                            <script src="http://d3js.org/d3.v3.min.js"></script>
+
+                            <script>
+
+                            // Set the dimensions of the canvas / graph
+                            var margin = {top: 20, right: 20, bottom: 30, left: 50},
+                                width = 650 - margin.left - margin.right,
+                                height = 300 - margin.top - margin.bottom;
+
+                            // Parse the date / time
+                            var parseDate = d3.time.format("%d-%b-%y").parse;
+
+                            // Set the ranges
+                            var x = d3.time.scale().range([0, width]);
+                            var y = d3.scale.linear().range([height, 0]);
+
+                            // Define the axes
+                            var xAxis = d3.svg.axis().scale(x)
+                                .orient("bottom").ticks(5);
+
+                            var yAxis = d3.svg.axis().scale(y)
+                                .orient("left").ticks(5);
+
+                            var area = d3.svg.area()
+                                .x(function(d) { return x(d.date); })
+                                .y0(height)
+                                .y1(function(d) { return y(d.close); });
+
+                            // Define the line
+                            var valueline = d3.svg.line()
+                                .x(function(d) { return x(d.date); })
+                                .y(function(d) { return y(d.close); });
+
+                            // Adds the svg canvas
+                            var svg = d3.select("#body")
+                                .append("svg")
+                                    .attr("width", width + margin.left + margin.right)
+                                    .attr("height", height + margin.top + margin.bottom)
+                                .append("g")
+                                    .attr("transform",
+                                          "translate(" + margin.left + "," + margin.top + ")");
+
+                            // Get the data
+                            d3.csv("data.csv", function(error, data) {
+                                data.forEach(function(d) {
+                                    d.date = parseDate(d.date);
+                                    d.close = +d.close;
+                                });
+
+                                // Scale the range of the data
+                                x.domain(d3.extent(data, function(d) { return d.date; }));
+                                y.domain([0, d3.max(data, function(d) { return d.close; })]);
+
+                                // Add the valueline path.
+                                svg.append("path")
+                                    .attr("class", "line")
+                                    .attr("d", valueline(data));
+
+                                // Add the filled area
+                                svg.append("path")
+                                    .datum(data)
+                                    .attr("class", "area")
+                                    .attr("d", area);
+
+
+
+                                // Add the X Axis
+                                svg.append("g")
+                                    .attr("class", "x axis")
+                                    .attr("transform", "translate(0," + height + ")")
+                                    .call(xAxis);
+
+                                // Add the Y Axis
+                                svg.append("g")
+                                    .attr("class", "y axis")
+                                    .call(yAxis);
+
+                                // Add the text label for the X axis
+                                svg.append("text")
+                                    .attr("transform",
+                                          "translate(" + (width/2) + " ," +
+                                                         (height+margin.bottom) + ")")
+                                    .style("text-anchor", "middle")
+                                    .attr("class", "shadow")
+                                    .text("Date");
+
+                                // Add the white background to the y axis label for legibility
+                                svg.append("text")
+                                    .attr("transform", "rotate(-90)")
+                                    .attr("y", -50)
+                                    .attr("x", margin.top - (height / 2))
+                                    .attr("dy", ".71em")
+                                    .style("text-anchor", "end")
+                                    .attr("class", "shadow")
+                                    .text("Price ($)");
+
+                            });
+
+                            </script>
+                            <div class="range">
+                               <button>1D</button><button>5D</button><button>1M</button><button>1Y</button>
+                            </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="lib/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <!-- Menu Toggle Script -->
+    <!-- <script>
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script> -->
+
+</body>
+
+</html>
