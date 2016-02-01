@@ -13,29 +13,44 @@ authRouter.post('/signup', jsonParser, (req, res) => {
   if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
     return res.status(400).json({msg: 'Invalid username or password'});
   }
-  //Check if username is taken
-  Profile.count({'authentication.username' : req.body.username}, function(err, count) {
+  //Check if email has account already
+  Profile.count({'authentication.email' : req.body.email}, function(err, count) {
     if(err) {
       console.log(err);
-      return res.status(400).json({msg: 'Sorry, we are having technical difficulties.'});
+      return res.status(400).json({msg: 'Sorry, technical difficulties'});
     }
+    //Check if someone with this email is already signed up
     if (count > 0) {
-      return res.status(401).json({msg: 'Username already exists'});
+      return res.status(401).json({msg: 'Account exists on this email'});
     }
 
-    //Assign parts of new profile in database
-    newProfile.authentication.username = req.body.username;
-    newProfile.hashPassword(req.body.password);
-    newProfile.save((err, data) => {
-      if(err) return handleError(err, res);
-      res.status(200).json({token: data.generateToken()});
-    });
+  	//Check if username is taken
+  	Profile.count({'authentication.username' : req.body.username}, function(err, count) {
+    	if(err) {
+      	console.log(err);
+      	return res.status(400).json({msg: 'Sorry, we are having technical difficulties.'});
+    	}
+    	if (count > 0) {
+      	return res.status(401).json({msg: 'Username already exists'});
+    	}
+
+    	//Assign parts of new profile in database
+    	newProfile.username = req.body.username;
+    	newProfile.authentication.email = req.body.email;
+    	newProfile.hashPassword(req.body.password);
+    	newProfile.save((err, data) => {
+      	if(err) return handleError(err, res);
+      	console.log(data.generateToken());
+      	res.status(200).cookie('signed_token',data.generateToken(), { signed: true });
+      	res.send('finished');
+    	});
+  	});
   });
 });
 
 //Signin
 authRouter.get('/signin', basicHTTP, (req, res) => {
-  Profile.findOne({'authentication.username' : req.basicHTTP.username}, (err, user) => {
+  Profile.findOne({username : req.basicHTTP.username}, (err, user) => {
     if(err) {
       console.log(err);
       //Database error
@@ -43,12 +58,16 @@ authRouter.get('/signin', basicHTTP, (req, res) => {
     }
     //No User
     if(!user) return res.status(401).json({msg: 'NONE SHALL PASS!'});
+
     //Password not matching
     if(!user.comparePassword(req.basicHTTP.password)) {
     	return res.status(401).json({msg: 'Password Mismatch'});
     }
     //Give verified user a token
-    res.status(200).json({token: user.generateToken()});
+    //res.status(200).json({token: user.generateToken()});
+    console.log(user.generateToken());
+    res.status(200).cookie('signed_token', user.generateToken(), { signed: true });
+    res.send('complete');
   });
 });
 
