@@ -70,4 +70,3 @@ authRouter.get('/signin', basicHTTP, (req, res) => {
     res.send('complete');
   });
 });
-
