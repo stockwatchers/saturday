@@ -19,10 +19,3 @@ profileRouter.get('/home', jwtAuth, (req , res) => {
 
 
 
-
-/*
-var BASE_URL = 'https://query.yahooapis.com/v1/public/yql?q=';
-var yql_stock = 'YHOO';
-var yql_query = ''+ yql_stock;
-var yql_query_str = encodedURI(BASE_URL + yql_query);
-var query_str_final = yql_query_str + '';*/

@@ -1,7 +1,7 @@
 //Requiring modules
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
+const app = module.exports = exports = express();
 const fs = require ('fs');
 const credentials = require(__dirname + '/credentials');
 const cookieParser = require('cookie-parser');
@@ -18,6 +18,6 @@ app.use(authRouter);
 
 var portUsed = process.env.PORT || 3000;
 
-app.listen(portUsed , function() {
+app.listen(portUsed , () => {
 	console.log( 'Server running on port ' + portUsed );
 });
