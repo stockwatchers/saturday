@@ -83,6 +83,6 @@ authRouter.get('/signin', basicHTTP, (req, res) => {
     //res.status(200).json({token: user.generateToken()});
     console.log(user.generateToken());
     res.status(200).cookie('signed_token', user.generateToken(), { signed: true });
-    res.send('complete');
+    res.json( {msg: 'Successful Login'} );
   });
 });
