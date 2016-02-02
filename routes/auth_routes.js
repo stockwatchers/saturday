@@ -56,7 +56,6 @@ authRouter.post('/signup', jsonParser, (req, res) => {
           res.status(200)
           .cookie('signed_token',data.generateToken(), { signed: true })
           .json( {msg:"finished"} );
-
       	});
     	});
     });
