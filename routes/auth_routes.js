@@ -49,7 +49,7 @@ authRouter.post('/signup', jsonParser, (req, res) => {
       	newProfile.hashPassword(req.body.password);
       	newProfile.save((err, data) => {
         	if(err) return handleError(err, res);
-          //res.status(200).json({token: data.generateToken()});
+          res.status(200).json({token: data.generateToken()});
           console.log(data.generateToken());
         	res.status(200).cookie('signed_token',data.generateToken(), { signed: true });
         	res.send('finished');
