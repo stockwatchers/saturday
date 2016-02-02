@@ -8,17 +8,28 @@ var authRouter = module.exports = exports = express.Router();
 
 //Signup
 authRouter.post('/signup', jsonParser, (req, res) => {
+<<<<<<< HEAD
   console.log('Request recieved.');
 
   var incData;
 
   req.on('data', function(chunk) {
     // console.log(chunk);
+=======
+
+  console.log('Request recieved.');
+  var incData;
+  req.on('data', function(chunk) {
+>>>>>>> 591b782ea7b5f17903aab2a05c9b9625a50146bc
     incData = JSON.parse(chunk);
   });
 
   req.on('end', function() {
     req.body = incData;
+<<<<<<< HEAD
+=======
+    console.log(req.body);
+>>>>>>> 591b782ea7b5f17903aab2a05c9b9625a50146bc
     var newProfile = new Profile();
     //Username must be entered and password must have length of 8
     if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
