@@ -8,13 +8,17 @@ var authRouter = module.exports = exports = express.Router();
 
 //Signup
 authRouter.post('/signup', jsonParser, (req, res) => {
-  req.body = '';
   console.log('Request recieved.');
+
+  var incData;
+
   req.on('data', function(chunk) {
-    req.body += chunk;
+    // console.log(chunk);
+    incData = JSON.parse(chunk);
   });
+
   req.on('end', function() {
-    console.log(req.body);
+    req.body = incData;
     var newProfile = new Profile();
     //Username must be entered and password must have length of 8
     if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
@@ -32,7 +36,7 @@ authRouter.post('/signup', jsonParser, (req, res) => {
       }
 
     	//Check if username is taken
-    	Profile.count({'authentication.username' : req.body.username}, function(err, count) {
+    	Profile.count({'username' : req.body.username}, function(err, count) {
       	if(err) {
         	console.log(err);
         	return res.status(400).json({msg: 'Sorry, we are having technical difficulties.'});
@@ -47,9 +51,12 @@ authRouter.post('/signup', jsonParser, (req, res) => {
       	newProfile.hashPassword(req.body.password);
       	newProfile.save((err, data) => {
         	if(err) return handleError(err, res);
-        	console.log(data.generateToken());
-        	res.status(200).cookie('signed_token',data.generateToken(), { signed: true });
-        	res.send('finished');
+        	console.log('Adding new Profile to server.');
+          //Output is a TOKEN and MSG FINISHED
+          res.status(200)
+          .cookie('signed_token',data.generateToken(), { signed: true })
+          .json( {msg:"finished"} );
+
       	});
     	});
     });
