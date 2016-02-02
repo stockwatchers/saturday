@@ -8,12 +8,14 @@ var authRouter = module.exports = exports = express.Router();
 
 //Signup
 authRouter.post('/signup', jsonParser, (req, res) => {
-  req.body = '';
+
   console.log('Request recieved.');
+  var incData;
   req.on('data', function(chunk) {
-    req.body += chunk;
+    incData = JSON.parse(chunk);
   });
   req.on('end', function() {
+    req.body = incData;
     console.log(req.body);
     var newProfile = new Profile();
     //Username must be entered and password must have length of 8
@@ -47,7 +49,8 @@ authRouter.post('/signup', jsonParser, (req, res) => {
       	newProfile.hashPassword(req.body.password);
       	newProfile.save((err, data) => {
         	if(err) return handleError(err, res);
-        	console.log(data.generateToken());
+          //res.status(200).json({token: data.generateToken()});
+          console.log(data.generateToken());
         	res.status(200).cookie('signed_token',data.generateToken(), { signed: true });
         	res.send('finished');
       	});
