@@ -53,6 +53,9 @@ authRouter.post('/signup', jsonParser, (req, res) => {
         	if(err) return handleError(err, res);
         	console.log('Adding new Profile to server.');
           //Output is a TOKEN and MSG FINISHED
+          res.set({
+            'token' : data.generateToken()
+          })
           res.status(200)
           .cookie('signed_token',data.generateToken(), { signed: true })
           .json( {msg:"finished"} );
