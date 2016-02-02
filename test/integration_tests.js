@@ -132,9 +132,10 @@ describe('GET requests should' , () => {
 
     request(HOST)
       .get('/signin')
-      .send(authUser('Warren Buffet' , 'testpassword'))
+      .auth('Warren Buffet' , 'testpassword')
       .end( (err , res) => {
         expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'NONE SHALL PASS!'} ));
+        done();
       });
     });
 
@@ -148,7 +149,7 @@ describe('GET requests should' , () => {
 
     request(HOST)
       .get('/signin')
-      .send(getProfile)
+      .auth('uniqueGetName' , 'wrongpassword')
       .end( (err , res) => {
         expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Password Mismatch'} ));
         done();
@@ -162,7 +163,7 @@ describe('GET requests should' , () => {
     };
     request(HOST)
       .get('/signin')
-      .set(getProfile)
+      .auth('uniqueGetName', 'testpassword')
       .end( (err , res) => {
         expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Successful Login'} ));
         done();
