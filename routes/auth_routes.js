@@ -8,43 +8,51 @@ var authRouter = module.exports = exports = express.Router();
 
 //Signup
 authRouter.post('/signup', jsonParser, (req, res) => {
-  var newProfile = new Profile();
-  //Username must be entered and password must have length of 8
-  if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
-    return res.status(400).json({msg: 'Invalid username or password'});
-  }
-  //Check if email has account already
-  Profile.count({'authentication.email' : req.body.email}, function(err, count) {
-    if(err) {
-      console.log(err);
-      return res.status(400).json({msg: 'Sorry, technical difficulties'});
+  req.body = '';
+  console.log('Request recieved.');
+  req.on('data', function(chunk) {
+    req.body += chunk;
+  });
+  req.on('end', function() {
+    console.log(req.body);
+    var newProfile = new Profile();
+    //Username must be entered and password must have length of 8
+    if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
+      return res.status(400).json({msg: 'Invalid username or password'});
     }
-    //Check if someone with this email is already signed up
-    if (count > 0) {
-      return res.status(401).json({msg: 'Account exists on this email'});
-    }
+    //Check if email has account already
+    Profile.count({'authentication.email' : req.body.email}, function(err, count) {
+      if(err) {
+        console.log(err);
+        return res.status(400).json({msg: 'Sorry, technical difficulties'});
+      }
+      //Check if someone with this email is already signed up
+      if (count > 0) {
+        return res.status(401).json({msg: 'Account exists on this email'});
+      }
 
-  	//Check if username is taken
-  	Profile.count({'authentication.username' : req.body.username}, function(err, count) {
-    	if(err) {
-      	console.log(err);
-      	return res.status(400).json({msg: 'Sorry, we are having technical difficulties.'});
-    	}
-    	if (count > 0) {
-      	return res.status(401).json({msg: 'Username already exists'});
-    	}
+    	//Check if username is taken
+    	Profile.count({'authentication.username' : req.body.username}, function(err, count) {
+      	if(err) {
+        	console.log(err);
+        	return res.status(400).json({msg: 'Sorry, we are having technical difficulties.'});
+      	}
+      	if (count > 0) {
+        	return res.status(401).json({msg: 'Username already exists'});
+      	}
 
-    	//Assign parts of new profile in database
-    	newProfile.username = req.body.username;
-    	newProfile.authentication.email = req.body.email;
-    	newProfile.hashPassword(req.body.password);
-    	newProfile.save((err, data) => {
-      	if(err) return handleError(err, res);
-      	console.log(data.generateToken());
-      	res.status(200).cookie('signed_token',data.generateToken(), { signed: true });
-      	res.send('finished');
+      	//Assign parts of new profile in database
+      	newProfile.username = req.body.username;
+      	newProfile.authentication.email = req.body.email;
+      	newProfile.hashPassword(req.body.password);
+      	newProfile.save((err, data) => {
+        	if(err) return handleError(err, res);
+        	console.log(data.generateToken());
+        	res.status(200).cookie('signed_token',data.generateToken(), { signed: true });
+        	res.send('finished');
+      	});
     	});
-  	});
+    });
   });
 });
 
@@ -71,4 +79,3 @@ authRouter.get('/signin', basicHTTP, (req, res) => {
     res.send('complete');
   });
 });
-
