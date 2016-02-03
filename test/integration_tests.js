@@ -7,7 +7,7 @@ const handleError = require( __dirname + '/../lib/handle_db_error');
 const server = require( __dirname + '/../server');
 
 //Model to test
-const Profile = require( __dirname + '/../models/profile');
+const Profile = require( __dirname + '/../models/user');
 //DB Settings
 const mongoose = require('mongoose');
 process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test_integration';
