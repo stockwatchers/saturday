@@ -147,9 +147,19 @@
             <div class="container-fluid">
                 <div class="row graph graphRel" id="body">
 
-                            <h1>TESLA (TSLA)  <button>hide graph</button></h1>
+                            <!-- Feed a lot of jQuery stuff into here -->
+                            <div class="page-header">
+                              <h1>
+                                <span id="stock-name">TESLA</span>
+                                (<span id="stock-symbol">TSLA</span>) <button>hide graph</button></h1>
+                            </div>
 
-                            <p>OPEN: <span>35.26</span></p><p>HI: <span>38.47</span></p><p>LOW: <span>35.26</span></p><p>CLOSE: <span>36.47</span> </p><p>VOLUME: <span>232323</span></p><p>CHANGE: <span>1.21</span></p>
+                            <p>OPEN: <span id="stock-open">35.26</span></p>
+                            <p>HI: <span id="stock-hi">38.47</span></p>
+                            <p>LOW: <span id="stock-low">35.26</span></p>
+                            <p>CLOSE: <span id="stock-close">36.47</span></p>
+                            <p>VOLUME: <span id="stock-volume">232323</span></p>
+                            <p>CHANGE: <span id="stock-change">1.21</span></p>
 
                             <!-- load the d3.js library -->
                             <script src="http://d3js.org/d3.v3.min.js"></script>
