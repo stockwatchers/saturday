@@ -19,6 +19,7 @@ profileRouter.get('/home', jwtAuth, (req , res) => {
 });
 //We need to use auth.routes to direct users to this route
 profileRouter.post('/stockLookup', bodyParser, (req , res) => {
+
   req.body = '';
   req.on('data', function(chunk) {
     req.body += chunk;
@@ -28,16 +29,5 @@ profileRouter.post('/stockLookup', bodyParser, (req , res) => {
       res.end(data);
     });
   });
+
 });
-
-  req.on('data' , () => {
-    querySql = JSON.parse(data);
-  });
-
-  req.on('end' , () => {
-    res.json({msg: 'success'});
-    res.end();
-  });
-
-
-})  ;
