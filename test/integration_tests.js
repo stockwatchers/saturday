@@ -1,4 +1,5 @@
 //Testing modules
+
 const chai = require('chai').use(require('chai-http'));
 const expect = chai.expect;
 const request = chai.request;
@@ -9,11 +10,12 @@ const server = require( __dirname + '/../server');
 const Profile = require( __dirname + '/../models/profile');
 //DB Settings
 const mongoose = require('mongoose');
-process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test';
+process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test_integration';
 
 var HOST = 'localhost:3000';
 
 describe('Authentication: The server...' , () => {
+
   describe('Receiving a POST request' , () => {
   //Close database and server instances when the tests are done
     after( (done) => {
@@ -21,7 +23,7 @@ describe('Authentication: The server...' , () => {
       done();
     });
 
-    it('should receive a cookie confirmation after an accurate POST request' , (done) => {
+    it('should receive a cookie confirmation after creating a user' , (done) => {
 
       var testProfilePost = {
         username: 'testProfile',
@@ -36,138 +38,28 @@ describe('Authentication: The server...' , () => {
           done();
         });
     });
+  });
 
-    it('should throw a invalid name or password error' , (done) => {
-
-      var testProfilePost = {
-        username: 'short',
-        email: 'emailshort@test.com',
-        password: 'short'
-      };
-
+  describe('GET requests should' , () => {
+    before( (done) => {
+      var getProfile = new Profile();
+      getProfile.username = "uniqueGetName";
+      getProfile.authentication.email = "getmail@mail.com";
+      getProfile.hashPassword("testpassword");
+      getProfile.save( (err , data) => {
+        if (err) return console.log('Error on creating test profile');
+        done();
+      });
+    });
+    it('should let you log in.' , (done) => {
       request(HOST)
-        .post('/signup')
-        .send(JSON.stringify(testProfilePost))
+        .get('/signin')
+        .auth('uniqueGetName', 'testpassword')
         .end( (err , res) => {
-          expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Invalid username or password'} ));
+          expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Successful Login'} ));
           done();
-        });
-    });
-
-    describe('Database Verification' , () => {
-      //Making it easy to set up a test profile
-      var dummyProfile;
-      //Create an entry
-      before( (done) => {
-        var testProfile = new Profile();
-        testProfile.username = "uniqueTestName";
-        testProfile.authentication.email = "testmail@mail.com";
-        testProfile.hashPassword("testpassword");
-        testProfile.save( (err , data) => {
-          if (err) return console.log('Error on creating test profile');
-          done();
-        });
       });
-      //Create a test account
-      beforeEach( (done) => {
-        dummyProfile = {
-          username: 'testProfile',
-          email: 'email1@test.com',
-          password: 'testword'
-        };
-        done();
-      });
-
-      it('should throw an error if email is taken' , (done) => {
-
-        dummyProfile.email = "testmail@mail.com";
-        request(HOST)
-          .post('/signup')
-          .send(JSON.stringify(dummyProfile))
-          .end( (err , res) => {
-            expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Account exists on this email'} ));
-            done();
-          });
-      });
-
-      it('should throw an error if the username is taken' , (done) => {
-
-        dummyProfile.username = 'uniqueTestName';
-        request(HOST)
-          .post('/signup')
-          .send( JSON.stringify(dummyProfile) )
-          .end( (err , res) => {
-            expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Username already exists'} ));
-            done();
-          });
-      });
-  });//Ensd of nested describe
-});
-describe('GET requests should' , () => {
-
-  var authUser = function(user , pass){
-    var auth = 'Basic ' + new Buffer(user + ':' + pass).toString("base64");
-
-    return auth;
-  }
-
-
-  before( (done) => {
-    var getProfile = new Profile();
-    getProfile.username = "uniqueGetName";
-    getProfile.authentication.email = "getmail@mail.com";
-    getProfile.hashPassword("testpassword");
-    getProfile.save( (err , data) => {
-      if (err) return console.log('Error on creating test profile');
-      done();
     });
   });
 
-  it('should throw errors if no user' , (done) => {
-    var getProfile = {
-      username: 'Warren Buffet',
-      email: 'getmail@test.com',
-      password: 'testpassword'
-    };
-
-    request(HOST)
-      .get('/signin')
-      .auth('Warren Buffet' , 'testpassword')
-      .end( (err , res) => {
-        expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'NONE SHALL PASS!'} ));
-        done();
-      });
-    });
-
-  it('should throw errors if passwords do not match' , (done) => {
-
-      var getProfile = {
-        username: 'uniqueGetName',
-        email: 'getmail@test.com',
-        password: 'testpasswod'
-      };
-
-    request(HOST)
-      .get('/signin')
-      .auth('uniqueGetName' , 'wrongpassword')
-      .end( (err , res) => {
-        expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Password Mismatch'} ));
-        done();
-      });
-  });
-  it('should let you log in.' , (done) => {
-    var getProfile = {
-      username: 'uniqueGetName',
-      email: 'getmail@test.com',
-      password: 'testpassword'
-    };
-    request(HOST)
-      .get('/signin')
-      .auth('uniqueGetName', 'testpassword')
-      .end( (err , res) => {
-        expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Successful Login'} ));
-        done();
-      });
-  });
-});
-});
+});//End of describe
