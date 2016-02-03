@@ -13,9 +13,18 @@ var profileRouter = module.exports = exports = express.Router();
 
 //We need to use auth.routes to direct users to this route
 profileRouter.get('/home', jwtAuth, (req , res) => {
-  res.json({msg: 'success'});
-  res.end();
-});
+
+  var query, querySql;
+  //Used to store query, to be sent off to the client
+
+  req.on('data' , () => {
+    querySql = JSON.parse(data);
+  });
+
+  req.on('end' , () => {
+    res.json({msg: 'success'});
+    res.end();
+  });
 
 
-
+})  ;
