@@ -1,4 +1,4 @@
-const Profile = require( __dirname + '/../models/profile');
+const Profile = require( __dirname + '/../models/user');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const handleError = require( __dirname + '/../lib/handle_db_error');

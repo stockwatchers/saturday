@@ -11,7 +11,7 @@ var profileRouter = require( __dirname + '/routes/profile_routes');
 var authRouter = require( __dirname + '/routes/auth_routes');
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/stockwatcher_db');
-
+app.use(express.static(__dirname + '/public'));
 app.use(cookieParser(credentials.cookieSecret));
 app.use(profileRouter);
 app.use(authRouter);
