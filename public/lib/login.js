@@ -3,7 +3,7 @@ $("#btn-signup").click(function() {
 	var username = $('#username').val();
 	var password = $('#password').val();
 	var dataToSend = '{"email":"' + email + '","username":"' + username + '","password":"' + password + '"}';
-	$.post('http://localhost:3000/signup', dataToSend, function() {
-		window.location.href = 'http://localhost:3000/home'
-	});
+	$.post('http://localhost:3000/signup', dataToSend);
+
 });
+

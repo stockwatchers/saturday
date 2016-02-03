@@ -13,9 +13,11 @@ var stockLookup = require(__dirname + '/../lib/stockLookup').stockLookup;
 var profileRouter = module.exports = exports = express.Router();
 
 //We need to use auth.routes to direct users to this route
-profileRouter.get('/home', jwtAuth, (req , res) => {
-  res.json({msg: 'success'});
-  res.end();
+profileRouter.get('/profile', jwtAuth, (express.static(__dirname + '/public', {index: "profile.html"})), (req , res) => {
+  Profile.find({portfolio: req.user.portfolio}, (err,data) => {
+    console.log(data);
+    res.status(200).json(data);
+  });
 });
 //We need to use auth.routes to direct users to this route
 profileRouter.post('/stockLookup', bodyParser, (req , res) => {
