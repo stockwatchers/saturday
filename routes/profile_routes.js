@@ -30,4 +30,14 @@ profileRouter.post('/stockLookup', bodyParser, (req , res) => {
   });
 });
 
+  req.on('data' , () => {
+    querySql = JSON.parse(data);
+  });
 
+  req.on('end' , () => {
+    res.json({msg: 'success'});
+    res.end();
+  });
+
+
+})  ;
