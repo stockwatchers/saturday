@@ -21,12 +21,12 @@
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
-    left: 250px;
-    width: 0;
+    left: 340px;
+    width: 354px;
     height: 100%;
-    margin-left: -250px;
+    margin-left: 0px;
     overflow-y: auto;
-    background: #000;
+    background: #131418;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -53,10 +53,11 @@
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 250px;
+    width: 350px;
     margin: 0;
     padding: 0;
     list-style: none;
+    font-size: 1.25em;
 }
 
 .sidebar-nav li {
@@ -96,7 +97,7 @@
     background: none;
 }
 
-@media(min-width:768px) {
+@media(max-width:768px) {
     #wrapper {
         padding-left: 250px;
     }
@@ -106,7 +107,9 @@
     }
 
     #sidebar-wrapper {
-        width: 250px;
+        width: 100%;
+        display: block;
+        margin-left: 344px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
@@ -116,10 +119,11 @@
     #page-content-wrapper {
         padding: 20px;
         position: relative;
+        margin-left: -254px;
     }
 
     #wrapper.toggled #page-content-wrapper {
         position: relative;
-        margin-right: 0;
+        display: block;
     }
 }
