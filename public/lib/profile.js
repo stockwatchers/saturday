@@ -6,64 +6,46 @@ $('.stockWatch').click(function() {
 		//WHERE WE UPDATE GRAPHS AND STUFF
 		updateStockInfo( processStockData(data) );
 		console.log('Graph updated');
-
-		//This is where data is coming from, to be used by all other processes.
-  });
+	});
 });
-
-//Gather reference all data points we need to dynamically load
-
 function updateStockInfo (processedDataObj) {
-
-	// var stockTicker,stockOpen, stockLow, stockHigh, stockClose, stockChange;
-	// var stockName; //How can we get this?
-
-	// $('#stock-name').html( (processedDataObj).toString() );
 	$('#stock-symbol').html( (processedDataObj.Symbol) );
 	$('#stock-open').html( (processedDataObj.Open) );
 	$('#stock-volume').html( (processedDataObj.Volume) );
 	$('#stock-close').html( (processedDataObj.Close) );
+	$('#stock-name').text(processedDataObj.StockName);
 
-	// $('#stock-hi')
-	// $('#stock-low')
-	// $('#stock-change')
-
-	//Generate graph
-	generateLineChart('#body' , processedDataObj.quotes);
-
+	$('#stockGraph').remove();  //Clean out old graph data
+	generateLineChart('#body' , processedDataObj.quotes); //Generate graph
 }
-
 function processStockData ( dataInc ) {
-
-	var stockName; //How can we get this?
-	var stockObject = {};
-	dataInc = JSON.parse(dataInc);
-	//Data we need once - Fed to title and stats on front page
-	stockObject.Symbol = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Symbol;
-	stockObject.Open = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Open;
-	stockObject.Volume = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Volume;
-	stockObject.Close = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Close;
-	// stockObject.Quotes = dataInc.query.results.quote;
-	var quoteData = [];
-	for (var i = 0; i < dataInc.query.results.quote.length; i++) {
-		var quoteJSON = {
-			date: dataInc.query.results.quote[i].Date,
-			close: dataInc.query.results.quote[i].Close
+	try {
+		var stockObject = {};
+		dataInc = JSON.parse(dataInc);
+		//Data we need once - Fed to title and stats on front page
+		stockObject.Symbol = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Symbol;
+		stockObject.Open = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Open;
+		stockObject.Volume = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Volume;
+		stockObject.Close = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Close;
+		stockObject.StockName = dataInc.stockName;
+		var quoteData = [];
+		for (var i = 0; i < dataInc.query.results.quote.length; i++) {
+			var quoteJSON = {
+				date: dataInc.query.results.quote[i].Date,
+				close: dataInc.query.results.quote[i].Close
+			}
+			quoteData.push(quoteJSON);
 		}
-		quoteData.push(quoteJSON);
+		stockObject.quotes = quoteData;
+
+		console.log('Data Processed');
+		return stockObject;
+	} catch (e) {
+		console.log('Error: ' + e);
 	}
-	stockObject.quotes = quoteData;   	//[ {obj:obj,key:val} , {obj:obj,key:val}]
-	// //Data to calculate -> Needs to be fed to the graph as an array of data
-	// stockDate = data.query.results.quote[0].Date;
-	// stockLow = data.query.results.quote[0].Low;
-	// stockHigh = data.query.results.quote[0].High;
-	console.log('Data Processed');
-	return stockObject;
-}
+};
 
 function generateLineChart(container , quoteData) {
-
-	$('#stockGraph').remove();
 
   var margin = {top:20, right:20, bottom:40, left:60};
   var width = 800 - margin.left - margin.right;
