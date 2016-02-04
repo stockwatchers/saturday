@@ -49,8 +49,8 @@ function processStockData ( dataInc ) {
 function generateLineChart(container , quoteData) {
 
   var margin = {top:20, right:20, bottom:40, left:60};
-  var width = 800 - margin.left - margin.right;
-  var height = 300 - margin.top - margin.bottom;
+  var width = 350 - margin.left - margin.right;
+  var height = 293 - margin.top - margin.bottom;
 
 	//Callback
   var parseDate = d3.time.format("%Y-%m-%d").parse;
