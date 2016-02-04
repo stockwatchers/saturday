@@ -9,86 +9,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>stockwatch - profile</title>
+
+    <!--  Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,300|Coda' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap Core CSS -->
     <link href="lib/vendor/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
+    <!-- Sidebar CSS -->
     <link href="lib/vendor/simple-sidebar.css" rel="stylesheet">
 
-    <style type="text/css">
-        html {font-size: .75em;}
-        body{
-            background-color: #fff;
-            font: 1em Arial;
-            margin-left: -10px;}
-        .stockIn{
-            width:220px; height: 60px;
-            padding-left: 4px;
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        h1{
-            margin-left: 18px;
-            font-weight: 700;
-        }
-        h1 button{
-            font-size: .5em;
-            font-weight: 400;
-        }
-        .graphRel{
-            position: relative;
-        }
-        .graph p{
-            display: inline-block;
-            margin: 15px 20px 25px;
-            font-weight: bold;
-        }
-        .graph p span{
-            font-weight: normal;
-        }
-        .graph p:first-of-type{
-            margin-left: 18px;
-        }
-        .range{
-            position: absolute;
-            bottom: -50px;    left:40px;
-        }
-        .range button{
-            font-size: 16px;
-            border: 2px solid black;
-            margin: 0 4px;
-            transition: all 200ms ease-in;
-        }
-        .range button:hover{
-            background-color: #ccc;
-        }
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="profile.css">
 
-        path {
-            stroke: steelblue;
-            stroke-width: 3;
-            fill: none;
-        }
-
-        .axis path,
-        .axis line {
-            fill: none;
-            stroke: grey;
-            stroke-width: 1;
-            shape-rendering: crispEdges;
-        }
-        .area {
-            fill: lightsteelblue;
-              stroke-width: 0;
-        }
-        .shadow{
-            font-weight: 700;
-            font-size: 1.25em;
-        }
-
-        </style>
-    </style>
+    <!-- jQuery CSS -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -105,20 +41,27 @@
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
+
+            <div class="portTop">
+                <span class="glyphicon glyphicon-menu-hamburger" id="hamClick"></span>
+                    <ul id="hideMenu">
+                        <li><a href="index.html" id="logout1">Logout</a></li>
+                        <li>Profile</li>
+                    </ul>
+            </div>
+
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#" style="font-size:1.5em;margin-top:30px;">
-                        Stock Watch 1.0
-                    </a>
+                    <h1>stock<span>watch</span></h1>
                 </li>
-                <li style="font-size:18px;color:#31B0D5">
+                <li>
                     WELCOME: dayTrader1
                 </li>
                 <li>
                     <a href="#"></a>
                 </li>
                 <li>
-                    <a href="#" style="font-weight:bold;font-size:1.5em">Portfolio Overview</a>
+                    <h2>Portfolio Overview</h2>
                 </li>
                 <li>
                     <a href="#" class="stockWatch"> FACEBOOK (FB)</a>
@@ -136,20 +79,37 @@
                     <a href="#" class="stockWatch"> MICROSOFT (MS)</a>
                 </li>
                 <li>
-                    <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
+                    <input type="text" placeholder="FIND STOCK TO WATCH" class="stockInPort">
+                    <span class="glyphicon glyphicon-search"></span>
                 </li>
             </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+
+            <div class="openGraphBtm">
+                <span class="glyphicon glyphicon-arrow-right"></span>
+                <p>OPEN <br><span>GRAPH</span></p>
+            </div>
+
+        </div> <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row graph graphRel" id="body">
 
-                            <h1>TESLA (TSLA)  <button>hide graph</button></h1>
+                    <div class="openPort">
+                        <span class="glyphicon glyphicon-menu-hamburger" id="hamClickMain"></span>
 
-                            <p>OPEN: <span>35.26</span></p><p>HI: <span>38.47</span></p><p>LOW: <span>35.26</span></p><p>CLOSE: <span>36.47</span> </p><p>VOLUME: <span>232323</span></p><p>CHANGE: <span>1.21</span></p>
+                            <ul id="hideMenuMain">
+                                <li><a href="index.html" id="logout2">Logout</a></li>
+                                <li>Profile</li>
+                            </ul>
+
+                        <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
+                        <span class="glyphicon glyphicon-search stockInIcon"></span>
+
+                    </div>
+
+                            <h1>TESLA (TSLA)</h1>
 
                             <!-- load the d3.js library -->
                             <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -157,9 +117,9 @@
                             <script>
 
                             // Set the dimensions of the canvas / graph
-                            var margin = {top: 20, right: 20, bottom: 30, left: 50},
-                                width = 650 - margin.left - margin.right,
-                                height = 300 - margin.top - margin.bottom;
+                            var margin = {top: 20, right: 20, bottom: 40, left: 60},
+                                width = 340 - margin.left - margin.right,
+                                height = 200 - margin.top - margin.bottom;
 
                             // Parse the date / time
                             var parseDate = d3.time.format("%d-%b-%y").parse;
@@ -238,7 +198,6 @@
                                     .attr("class", "shadow")
                                     .text("Date");
 
-                                // Add the white background to the y axis label for legibility
                                 svg.append("text")
                                     .attr("transform", "rotate(-90)")
                                     .attr("y", -50)
@@ -247,36 +206,38 @@
                                     .style("text-anchor", "end")
                                     .attr("class", "shadow")
                                     .text("Price ($)");
-
                             });
 
                             </script>
-                            <div class="range">
-                               <button>1D</button><button>5D</button><button>1M</button><button>1Y</button>
+
+                            <p>OPEN: <span>35.26</span></p><p>HI: <span>38.47</span></p><p>LOW: <span>35.26</span></p><p>CLOSE: <span>36.47</span> </p><p>CHANGE: <span>1.21</span></p>
+
+                            <div class="rangeWrap">
+                                <div class="range">
+                                   <button>1D</button><button>5D</button><button>1M</button><button>1Y</button>
+                                </div>
                             </div>
-
                 </div>
+                            <div class="openPortBtm">
+                                <span class="glyphicon glyphicon-arrow-left"></span>
+                                <p>OPEN <br><span>PORTFOLIO</span></p>
+                            </div>
             </div>
-        </div>
-        <!-- /#page-content-wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
+        </div><!-- /#page-content-wrapper -->
+
+    </div><!-- /#wrapper -->
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
+   <!-- Bootstrap Core JavaScript -->
     <script src="lib/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <script src="lib/profile.js"></script>
-    <!-- Menu Toggle Script -->
-    <!-- <script>
-      $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-      });
-    </script> -->
+    <script src="lib/logout.js"></script>
+    <script>console.log(document.cookie);</script>
 
-</body>
+    <script src="scripts.js"></script>
 
 </html>

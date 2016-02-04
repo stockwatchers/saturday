@@ -1,0 +1,49 @@
+body{
+    background-color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+.logo h1, .logo h2, .logo p, .panel-title{
+    color: #000;
+    font-family: 'Open Sans', sans-serif;
+}
+.panel-info > .panel-heading{
+    background-color:#F2F2F2;
+    color: #000;
+    width: 350px;
+}
+.panel{
+    box-shadow: none;
+}
+.panel-body{
+    padding-top:30px;
+    background-color:#fff;
+    border:0;"
+}
+.input-group{
+    margin-bottom: 25px;
+}
+.form-group{
+   margin-top:10px;
+}
+.noAcct{
+   padding-top:15px;
+   font-size:85%;
+}
+#signinlink{
+    margin: 0 20px 4px 0;
+    display: block;
+}
+#loginbox{
+    margin:80px 0 0 -32px;
+}
+#signupbox{
+    display:none;
+    margin:80px 0 0 -32px;
+    padding-right:40px;"
+}
+.signinlinkArea{
+    float:right;
+    font-size: 85%;
+    position: relative;
+    top:-10px;
+}
