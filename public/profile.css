@@ -252,7 +252,14 @@
             position: absolute;
             z-index: 15000;
         }
-
+        #logout1{
+            text-decoration: none;
+            color: 808080;
+        }
+        #logout2{
+            text-decoration: none;
+            color: 808080;
+        }
 
         #hideMenuMain{
             color: #000;

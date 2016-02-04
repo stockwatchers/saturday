@@ -22,7 +22,7 @@ authRouter.post('/signup', (req, res) => {
     console.log(req.body);
     var newProfile = new Profile();
     //Username must be entered and password must have length of 8
-    if(!((req.body.username || '').length && (req.body.password || '').length > 7)) {
+    if(!((req.body.username || '').length && (req.body.password || '').length > 0)) {
       return res.status(400).json({msg: 'Invalid username or password'});
     }
     //Check if email has account already
@@ -79,16 +79,20 @@ authRouter.post('/signin', (req, res) => {
         console.log(err);
         //Database error
         return res.status(401).json({msg: 'Sorry, we are having technical difficulties.'});
+        console.log('db error');
       }
       //No User
       if(!data) return res.status(401).json({msg: 'NONE SHALL PASS!'});
+      console.log('no user');
 
       //Password not matching
       if(!data.comparePassword(req.body.password)) {
     	 return res.status(401).json({msg: 'Password Mismatch'});
+       console.log('password mismatch');
       }
       //Give verified user a token in cookie
-    res.status(200).cookie('token',data.generateToken()).end();
+      console.log('set cookie');
+      res.status(200).cookie('token',data.generateToken()).end();
     });
   });
 });
