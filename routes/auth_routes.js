@@ -65,31 +65,39 @@ authRouter.post('/signin', (req, res) => {
   var incData = '';
 
   req.on('data', function(chunk) {
-    incData = incData + chunk;
+    incData += chunk;
+    console.log(typeof(incData));
+
   });
 
   req.on('end', function() {
     incData = JSON.parse(incData);
     req.body = incData;
-    console.log(req.body + '  inside end');
+    console.log(typeof(req.body) + '  inside end');
+    var user;
 
     //Log in with username and Password
     Profile.findOne({username : req.body.username}, (err, data) => {
+      debugger;
       if(err) {
         console.log(err);
         //Database error
-        return res.status(401).json({msg: 'Sorry, we are having technical difficulties.'});
         console.log('db error');
+        return res.status(401).json({msg: 'Sorry, we are having technical difficulties.'});
       }
       //No User
-      if(!data) return res.status(401).json({msg: 'NONE SHALL PASS!'});
-      console.log('no user');
+      if(!data) {
+        console.log('no user');
+        res.status(401).json({msg: 'NONE SHALL PASS!'});
+        return;
+       }
 
       //Password not matching
       if(!data.comparePassword(req.body.password)) {
-    	 return res.status(401).json({msg: 'Password Mismatch'});
-       console.log('password mismatch');
+    	  console.log('password mismatch');
+        return res.status(401).json({msg: 'Password Mismatch'});
       }
+
       //Give verified user a token in cookie
       console.log('set cookie');
       res.status(200).cookie('token',data.generateToken()).end();
