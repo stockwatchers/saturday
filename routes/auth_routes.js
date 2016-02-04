@@ -1,5 +1,7 @@
 const Profile = require( __dirname + '/../models/user');
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 var authRouter = module.exports = exports = express.Router();
 authRouter.post('/signup', (req, res) => {
   console.log('Sign Up Request Recieved');
@@ -61,41 +63,13 @@ authRouter.post('/signup', (req, res) => {
 });
 authRouter.post('/signin', (req, res) => {
   console.log('Sign In Request Recieved');
-  req.body = '';
-  req.on('data', function(chunk) {
-    req.body += chunk;
-  });
-  req.on('end', function() {
-    var decoded;
-    req.body = req.body.substr(req.body.indexOf('=') + 1, req.body.length);
-    console.log(req.body);
-    try {
-      decoded = jwt.verify(req.body, process.env.APP_SECRET || 'changethis');
-    } catch(e) {
-      return res.status(401).json({msg: 'Not allowed -JWT'});
-    }
-    Profile.findOne({_id: decoded.id}, (err, user) => {
-      if(err) {
-        console.log(err);
-      return res.status(401).json({msg: 'Not right. Nope -JWT'});
-      }
-      if(!user) return res.status(401).json({msg: 'Not gunna happen - JWT'});
-      console.log(user);
-      res.end(JSON.stringify(user));
-    });
-  });
-});
-authRouter.post('/validateToken', function(req, res) {
-  console.log('Token Validation Request Recieved');
   var incData = '';
   req.on('data', function(chunk) {
     incData += chunk;
   });
   req.on('end', function() {
-    console.log(incData);
+    incData = JSON.parse(incData);
     req.body = incData;
-    res.status(200).end();
-    /*
     Profile.findOne({username : req.body.username}, (err, data) => {
       if(err) {
         console.log('Error occurred during Profile.findOne using the client\'s username data.');
@@ -123,6 +97,44 @@ authRouter.post('/validateToken', function(req, res) {
       console.log();
       res.status(200).cookie('token', tokenData).end();
     });
-    */
+  });
+});
+authRouter.post('/validateToken', function(req, res) {
+  console.log('Token Validation Request Recieved');
+  req.body = '';
+  req.on('data', function(chunk) {
+    req.body += chunk;
+  });
+  req.on('end', function() {
+    var decoded;
+    req.body = req.body.substr(req.body.indexOf('=') + 1, req.body.length);
+    console.log('Token specified by the client: ' + req.body);
+    try {
+      decoded = jwt.verify(req.body, process.env.APP_SECRET || 'changethis');
+      console.log('Decoded token: ' + JSON.stringify(decoded));
+    } catch(e) {
+      console.log('Unable to decode the token specified by the client.');
+      console.log('Token Validation Request Finished');
+      console.log();
+      return res.status(401).end();
+    }
+    Profile.findOne({_id: decoded.id}, (err, user) => {
+      if(err) {
+        console.log('Error during Profile.findOne.');
+        console.log('Token Validation Request Finished');
+        console.log();
+        return res.status(401).end();
+      }
+      if(!user) {
+        console.log('No user with the id data specified by the client\'s JWT was found in the database.');
+        console.log('Token Validation Request Finished');
+        console.log();
+        return res.status(401).end();
+      }
+      console.log('Found the following user data associated with the id value derived from the JWT specified by the client: ' + user);
+      console.log('Token Validation Request Finished');
+      console.log();
+      res.status(200).end('success');
+    });
   });
 });
