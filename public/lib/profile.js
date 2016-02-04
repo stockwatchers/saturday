@@ -7,9 +7,3 @@ $('.stockWatch').click(function() {
 		console.log(data);
   });
 });
-
-
-$.post('http://localhost:3000/profile', document.cookie, function(data) {
-	console.log('hahahaha');
-  console.log(data);
-});

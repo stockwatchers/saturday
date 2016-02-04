@@ -1,106 +1,128 @@
 const Profile = require( __dirname + '/../models/user');
 const express = require('express');
-const jsonParser = require('body-parser').json();
-const handleError = require( __dirname + '/../lib/handle_db_error');
-
 var authRouter = module.exports = exports = express.Router();
-
-//Signup
 authRouter.post('/signup', (req, res) => {
-
-  console.log('Request recieved.');
-
+  console.log('Sign Up Request Recieved');
   var incData = '';
-
   req.on('data', function(chunk) {
     incData = incData + chunk;
   });
-
   req.on('end', function() {
     incData = JSON.parse(incData);
     req.body = incData;
-    console.log(req.body);
     var newProfile = new Profile();
-    //Username must be entered and password must have length of 8
     if(!((req.body.username || '').length && (req.body.password || '').length > 0)) {
+      console.log('Invalid username or password found when attempting to save the new user.');
+      console.log('Sign Up Request Finished');
+      console.log();
       return res.status(400).json({msg: 'Invalid username or password'});
     }
-    //Check if email has account already
     Profile.count({'authentication.email' : req.body.email}, function(err, count) {
       if(err) {
-        console.log(err);
+        console.log('Error during Profile.count during the signup process.');
+        console.log('Sign Up Request Finished');
+        console.log();
         return res.status(400).json({msg: 'Sorry, technical difficulties'});
       }
-      //Check if someone with this email is already signed up
       if (count > 0) {
+        console.log('The email address provided is already associated with another account.');
+        console.log('Sign Up Request Finished');
+        console.log();
         return res.status(401).json({msg: 'Account exists on this email'});
       }
-
-    	//Check if username is taken
     	Profile.count({'username' : req.body.username}, function(err, count) {
       	if(err) {
-        	console.log(err);
+        	console.log('Error duing Profile.count when looking for the username to check if it is already exists in the database.');
+          console.log('Sign Up Request Finished');
+          console.log();
         	return res.status(400).json({msg: 'Sorry, we are having technical difficulties.'});
       	}
       	if (count > 0) {
+          console.log('The username provided is already associated with an account in the database.');
+          console.log('Sign Up Request Finished');
+          console.log();
         	return res.status(401).json({msg: 'Username already exists'});
       	}
-
-      	//Assign parts of new profile in database
       	newProfile.username = req.body.username;
       	newProfile.authentication.email = req.body.email;
       	newProfile.hashPassword(req.body.password);
       	newProfile.save((err, data) => {
-        	if(err) return handleError(err, res);
-        	console.log('Adding new Profile to server.');
-          res.status(200).cookie('token',data.generateToken()).end();
+        	if(err) console.log('Failure saving new user to database.');
+          console.log('New user saved: ' + data);
+          var tokenData = data.generateToken();
+          console.log('Send the new user a cookie to use for authentication.  This is their generated token: ' + tokenData);
+          console.log('Sign Up Request Finished');
+          console.log();
+          res.status(200).cookie('token', tokenData).end();
       	});
     	});
     });
   });
 });
-
-//Signin
 authRouter.post('/signin', (req, res) => {
-  var incData = '';
-
+  console.log('Sign In Request Recieved');
+  req.body = '';
   req.on('data', function(chunk) {
-    incData += chunk;
-    console.log(typeof(incData));
-
+    req.body += chunk;
   });
-
   req.on('end', function() {
-    incData = JSON.parse(incData);
-    req.body = incData;
-    console.log(typeof(req.body) + '  inside end');
-    var user;
-
-    //Log in with username and Password
-    Profile.findOne({username : req.body.username}, (err, data) => {
-      debugger;
+    var decoded;
+    req.body = req.body.substr(req.body.indexOf('=') + 1, req.body.length);
+    console.log(req.body);
+    try {
+      decoded = jwt.verify(req.body, process.env.APP_SECRET || 'changethis');
+    } catch(e) {
+      return res.status(401).json({msg: 'Not allowed -JWT'});
+    }
+    Profile.findOne({_id: decoded.id}, (err, user) => {
       if(err) {
         console.log(err);
-        //Database error
-        console.log('db error');
+      return res.status(401).json({msg: 'Not right. Nope -JWT'});
+      }
+      if(!user) return res.status(401).json({msg: 'Not gunna happen - JWT'});
+      console.log(user);
+      res.end(JSON.stringify(user));
+    });
+  });
+});
+authRouter.post('/validateToken', function(req, res) {
+  console.log('Token Validation Request Recieved');
+  var incData = '';
+  req.on('data', function(chunk) {
+    incData += chunk;
+  });
+  req.on('end', function() {
+    console.log(incData);
+    req.body = incData;
+    res.status(200).end();
+    /*
+    Profile.findOne({username : req.body.username}, (err, data) => {
+      if(err) {
+        console.log('Error occurred during Profile.findOne using the client\'s username data.');
+        console.log('Sign In Request Finished');
+        console.log();
         return res.status(401).json({msg: 'Sorry, we are having technical difficulties.'});
       }
-      //No User
+      console.log(data);
       if(!data) {
-        console.log('no user');
-        res.status(401).json({msg: 'NONE SHALL PASS!'});
-        return;
-       }
-
-      //Password not matching
+        console.log('There is no user with the client\'s specified username.');
+        console.log('Sign In Request Finished');
+        console.log();
+        return res.status(401).json({msg: 'NONE SHALL PASS!'});
+      }
       if(!data.comparePassword(req.body.password)) {
-    	  console.log('password mismatch');
+    	  console.log('The password specified by the client does not match the password associated with the client specified username.');
+        console.log('Sign In Request Finished');
+        console.log();
         return res.status(401).json({msg: 'Password Mismatch'});
       }
-
-      //Give verified user a token in cookie
-      console.log('set cookie');
-      res.status(200).cookie('token',data.generateToken()).end();
+      console.log('The client has sent valid username and password data for an account in the database.');
+      var tokenData = data.generateToken();
+      console.log('Sending the client a generated token for that user account: ' + tokenData);
+      console.log('Sign In Request Finished');
+      console.log();
+      res.status(200).cookie('token', tokenData).end();
     });
+    */
   });
 });

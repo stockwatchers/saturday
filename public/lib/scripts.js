@@ -20,12 +20,11 @@
     });
 
 /* This function opens the logout menu on the profile page */
-
-    $(function() {
-      $("#hideMenuMain").addClass("bMain");
-    });
-    $("#hamClickMain").click(function() {
-        $("#hideMenuMain").toggleClass("aMain bMain");
-        $(".stockIn").toggleClass("slideR", 600);
-        $(".stockInIcon").toggleClass("hide", 200);
-    });
+  $(function() {
+    $("#hideMenuMain").addClass("bMain");
+  });
+  $("#hamClickMain").click(function() {
+  $("#hideMenuMain").toggleClass("aMain bMain");
+  $(".stockIn").toggleClass("slideR", 600);
+  $(".stockInIcon").toggleClass("hide", 200);
+});
