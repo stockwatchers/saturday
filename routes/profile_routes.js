@@ -18,5 +18,4 @@ profileRouter.post('/stockLookup', bodyParser, (req , res) => {
       res.end(data);
     });
   });
-
 });
