@@ -13,9 +13,11 @@
     <meta name="description" content="">
 
     <meta name="author" content="">
-
-    <title>stockPOP - profile</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="lib/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="/lib/validateToken.js"></script>
+    <title>StockPop</title>
     <!--  Google Fonts -->
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,300|Coda' rel='stylesheet' type='text/css'>
@@ -30,7 +32,7 @@
 
     <!-- Custom CSS -->
 
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="css/profile.css">
 
     <!-- jQuery CSS -->
 
@@ -63,9 +65,11 @@
                 <span class="glyphicon glyphicon-menu-hamburger" id="hamClick"></span>
 
                     <ul id="hideMenu">
-
+<!-- <<<<<<< HEAD
                         <li><a href="index.html" class="logout">Logout</a></li>
-
+======= -->
+                        <li><a href="#" id="logout1">Logout</a></li>
+<!-- >>>>>>> 9915ef0fcbe095945e4f8b7a2d4d554aa1a0cf6a -->
                         <li><a href="#"  id="viewGraph">View Graph</a></li>
 
                     </ul>
@@ -81,19 +85,11 @@
                 </li>
 
                 <li>
-
-                    WELCOME: dayTrader1
-
-                </li>
-
-                <li>
-
                     <a href="#"></a>
-
                 </li>
 
                 <li>
-
+                    <h2>USER</h2>
                     <h2>Portfolio Overview</h2>
 
                 </li>
@@ -153,15 +149,18 @@
             <div class="container-fluid">
 
                 <div class="row graph graphRel" id="body">
-
                     <div class="openPort">
 
                         <span class="glyphicon glyphicon-menu-hamburger" id="hamClickMain"></span>
 
                             <ul id="hideMenuMain">
+<!-- <<<<<<< HEAD
 
                                 <li><a href="index.html" class="logout">Logout</a></li>
 
+======= -->
+                                <li><a href="#" id="logout2">Logout</a></li>
+<!-- >>>>>>> 9915ef0fcbe095945e4f8b7a2d4d554aa1a0cf6a -->
                                 <li><a href="#"  id="viewProfile">View Profile</a></li>
 
                             </ul>
@@ -169,23 +168,19 @@
                             <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
 
                             <span class="glyphicon glyphicon-search stockInIcon"></span>
-
                     </div>
-
                             <h1>
                               <span id="stock-name">TESLA</span> (<span id="stock-symbol">TSLA</span>)
                             </h1>
 
                             <!-- load the d3.js library -->
-
                             <script src="http://d3js.org/d3.v3.min.js"></script>
 
-                            <p>OPEN: <span id="stock-close">35.26</span></p>
-                            <p>HI: <span id="stock-hi">38.47</span></p>
-                            <p>LOW: <span id="stock-low">35.26</span></p>
-                            <p>CLOSE: <span id="stock-close">36.47</span> </p>
-                            <p>CHANGE: <span id="stock-change">1.21</span></p>
-
+                            <p>OPEN: <span id="stock-close"></span></p>
+                            <p>HI: <span id="stock-hi"></span></p>
+                            <p>LOW: <span id="stock-low"></span></p>
+                            <p>CLOSE: <span id="stock-close"></span> </p>
+                            <p>CHANGE: <span id="stock-change"></span></p>
                             <div class="rangeWrap">
                                 <div class="range">
                                    <button class="button-range" id="button-1M">1M</button>
@@ -209,21 +204,8 @@
         </div><!-- /#page-content-wrapper -->
 
     </div><!-- /#wrapper -->
-
-    <!-- jQuery -->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-   <!-- Bootstrap Core JavaScript -->
-
-    <script src="lib/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-
     <script src="lib/profile.js"></script>
-
-    <script>console.log(document.cookie);</script>
-
-    <script src="scripts.js"></script>
-</body>
+    <script src="lib/logout.js"></script>
+    <script src="lib/scripts.js"></script>
+    </body>
 </html>

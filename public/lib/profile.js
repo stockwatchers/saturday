@@ -187,39 +187,3 @@ function generateLineChart(container , arrayQuotes , range , flag) {
 	.attr('class', 'shadow')
 	.text('Price ($)');
 };
-
-
-//Sample Data Object
-// var sampleData = {
-// 	"query":{
-// 		"count":252,
-// 		"created":"2016-02-03T20:30:30Z",
-// 		"lang":"en-US",
-// 		"results":{
-// 			"quote":[
-// 				{
-// 					"Symbol":"FB",
-// 					"Date":"2016-02-01",
-// 					"Open":"112.269997",
-// 					"High":"115.720001",
-// 					"Low":"112.010002",
-// 					"Close":"115.089996",
-// 					"Volume":"45840900",
-// 					"Adj_Close":"115.089996"},
-// 				{
-// 					"Symbol":"FB",
-// 					"Date":"2016-02-01",
-// 					"Open":"112.269997",
-// 					"High":"115.720001",
-// 					"Low":"112.010002",
-// 					"Close":"115.089996",
-// 					"Volume":"45840900",
-// 					"Adj_Close":"115.089996"}
-// 			]			//Lots more rsults after this
-// 		}
-// 	}
-// };
-$.post('http://localhost:3000/profile', document.cookie, function(data) {
-	console.log('hahahaha');
-  console.log(data);
-});

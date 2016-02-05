@@ -44,7 +44,6 @@
     });
 
 /* This function opens the logout menu on the profile page */
-
     $(function() {
       $("#hideMenuMain").addClass("bMain");
     });
@@ -53,4 +52,3 @@
         $(".stockIn").toggleClass("slideR", 600);
         $(".stockInIcon").toggleClass("hide", 200);
     });
-
