@@ -87,7 +87,7 @@ body {
   margin-left: 10px;
 }
 .graph p{
-    line-height: 1em;
+    line-height: 0px;
     display: inline-block;
     margin: 0px 20px 20px 25px;
     font-weight: bold;
@@ -102,14 +102,20 @@ body {
 .graph p:first-of-type{
     margin-left: 25px;
 }
+.stockHeader {
+  font-size: 2.827em;
+  position: relative;
+  top: 7px;
+  left: 10px;
+}
 .stockTickers {
   position:relative;
-  top:45px;
+  top:35px;
 }
 .rangeWrap{
     background-color:#131418;
     width: 100%;
-    height:127px;
+    height:150px;
 }
 .range{
     position: relative;
