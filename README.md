@@ -46,4 +46,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+##Resources...
 
+Yahoo Finance API Pt 1 Getting Started
+https://www.youtube.com/watch?v=tyRcHzLNPbU
+
+D3
+http://d3js.org/
+
+D3.js: How to handle dynamic JSON Data
+http://pothibo.com/2013/09/d3-js-how-to-handle-dynamic-json-data/
