@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>stockwatch - profile</title>
+    <title>stockPOP - profile</title>
 
     <!--  Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,300|Coda' rel='stylesheet' type='text/css'>
@@ -35,6 +35,7 @@
 
 </head>
 
+
 <body>
 
     <div id="wrapper">
@@ -45,14 +46,14 @@
             <div class="portTop">
                 <span class="glyphicon glyphicon-menu-hamburger" id="hamClick"></span>
                     <ul id="hideMenu">
-                        <li><a href="index.html" id="logout1">Logout</a></li>
-                        <li>Profile</li>
+                        <li><a href="index.html" class="logout">Logout</a></li>
+                        <li><a href="#"  id="viewGraph">View Graph</a></li>
                     </ul>
             </div>
 
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <h1>stock<span>watch</span></h1>
+                    <h1>Stock<span>POP</span></h1>
                 </li>
                 <li>
                     WELCOME: dayTrader1
@@ -95,8 +96,18 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row graph graphRel" id="body">
+                    <div class="openPort">
+                        <span class="glyphicon glyphicon-menu-hamburger" id="hamClickMain"></span>
 
-<<<<<<< HEAD
+                            <ul id="hideMenuMain">
+                                <li><a href="index.html" class="logout">Logout</a></li>
+                                <li><a href="#"  id="viewProfile">View Profile</a></li>
+                            </ul>
+
+                            <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
+                            <span class="glyphicon glyphicon-search stockInIcon"></span>
+
+                    </div>
                     <!-- Feed a lot of jQuery stuff into here -->
                     <div class="page-header">
                       <h1>
@@ -146,9 +157,11 @@
    <!-- Bootstrap Core JavaScript -->
     <script src="lib/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <script src="lib/profile.js"></script>
-    <script src="lib/logout.js"></script>
     <script>console.log(document.cookie);</script>
 
     <script src="scripts.js"></script>
+
+
+    </body>
 
 </html>
