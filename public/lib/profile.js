@@ -19,6 +19,7 @@ function updateStockInfo (processedDataObj) {
 	$('#stockGraph').remove();  //Clean out old graph data
 	generateLineChart('#body' , processedDataObj.quotes); //Generate graph
 }
+
 function processStockData ( dataInc ) {
 	try {
 		var stockObject = {};
@@ -46,7 +47,7 @@ function processStockData ( dataInc ) {
 	}
 };
 
-function generateLineChart(container , quoteData) {
+function generateLineChart(container , quoteData , range) {
 
   var margin = {top:20, right:20, bottom:40, left:60};
   var width = 350 - margin.left - margin.right;

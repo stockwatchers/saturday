@@ -1,301 +1,333 @@
-       * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-       html {font-size: .75em;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-       }
-        body{
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-            font: 1em Arial;}
-        #page-content-wrapper{
-            padding: 0;
-        }
-        .stockIn{
-            width:220px; height: 50px;
-            padding-left: 4px;
-            position: absolute;
-            top: 3px; left: 70px;
-            font-size: 18px;
-        }
-        .stockInPort{
-            width:260px; height: 50px;
-            padding-left: 4px;
-            margin: 40px auto 0;
-            font-size: 18px;
-        }
-        .sidebar-brand h1{
-            margin-top: 80px;
-            margin-left: 0px;
-            font-weight: 400;
-            color:#fff;
-            font-family: 'Open Sans', sans-serif;
-        }
-        .sidebar-brand h1 span{
-            color:#808080;
-        }
-        .graphRel{
-            position: relative;
-            background-color:#fff;
-            width:340px;
-        }
-        .graph h1{
-          font-family: 'Open Sans', sans-serif;
-          font-weight: 700;
-          color: #000;
-          margin-left: 10px;
-        }
-        .graph p{
-            display: inline-block;
-            margin: 40px 20px 0 25px;
-            font-weight: bold;
-            color: #fff;
-            font-family: 'Coda', cursive;
-        }
-        .graph p span{
-            font-weight: normal;
-            color: #5CB859;
-            padding-left: 4px;
-        }
-        .graph p:first-of-type{
-            margin-left: 25px;
-        }
-        .rangeWrap{
-            background-color:#131418;
-            height: 227px;
-            margin-top: -100px;
-        }
-        .range{
-            position: absolute;
-            bottom: 60px;    left:20px;
-        }
-        .range button{
-            font-size: 1.5em;
-            background-color:#D79999;
-            color: #fff;
-            border: 2px solid #BE6262;
-            border-radius: 2px;
-            margin: 0 4px;
-            transition: all 200ms ease-in;
-        }
-        .range button:hover{
-            background-color: #ccc;
-        }
-
-        path {
-            stroke: #1C9CA5;
-            stroke-width: 3;
-            fill: none;
-        }
-
-        .axis path,
-        .axis line {
-            fill: none;
-            stroke: grey;
-            stroke-width: 1;
-            shape-rendering: crispEdges;
-        }
-        .area {
-            fill: #45D7E8;
-              stroke-width: 0;
-        }
-        .shadow{
-            font-weight: 700;
-            font-size: 1.25em;
-            color: #fff;
-            font-family: 'Open Sans', sans-serif;
-        }
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 
-        /* open portfolio on mobile */
+html {
+    font-size: .75em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    font: 1em Arial;}
+#page-content-wrapper{
+    padding: 0 auto 0;
+}
+.stockIn{
+    width:220px; height: 50px;
+    padding-left: 3px;
+    position: absolute;
+    top: 3px; left: 20%;
+    font-size: 18px;
+}
+.stockInPort{
+    width:260px; height: 50px;
+    padding-left: 4px;
+    margin: 40px auto 0;
+    font-size: 18px;
+}
+.sidebar-brand h1{
+    margin-top: 80px;
+    margin-left: 0px;
+    font-weight: 400;
+    color:#fff;
+    font-family: 'Open Sans', sans-serif;
+}
+.sidebar-brand h1 span{
+    color:#808080;
+}
+.graphRel{
+    position: relative;
+    background-color:#fff;
+}
+.graph h1{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  color: #000;
+  margin-left: 10px;
+}
+.graph p{
+    line-height: 1em;
+    display: inline-block;
+    margin: 0px 20px 20px 25px;
+    font-weight: bold;
+    color: #fff;
+    font-family: 'Coda', cursive;
+}
+.graph p span{
+    font-weight: normal;
+    color: #5CB859;
+    padding-left: 4px;
+}
+.graph p:first-of-type{
+    margin-left: 25px;
+}
+.rangeWrap{
+    background-color:#131418;
+    height: 15em; width: 100%;
+    margin-top: -100px;
+}
+.range{
+    position: absolute;
+    bottom: 40px;    left:20px;
+}
+.range button{
+    font-size: 1.5em;
+    background-color:#D79999;
+    color: #fff;
+    border: 2px solid #BE6262;
+    border-radius: 2px;
+    margin: 0 4px;
+    transition: all 200ms ease-in;
+}
+.range button:hover{
+    background-color: #ccc;
+}
 
-        .openPort{
-            background-color: #F2F2F2;
-            width: 100%;    height:56px;
-            margin: 0;
-        }
-        .portTop{
-            background-color: #F2F2F2;
-            width: 100%;    height:56px;
-            margin: 0;
-        }
-        .openPort i{
-            color:#3C3C3C;
-        }
-        .hideGraph{
-            position: absolute;
-            bottom: 10px;
-            left:50%;
-            font-size: 1em;
-            font-weight: 400;
-            width: 140px;
-        }
-        .openPortBtm{
-            background-color: #F2F2F2;
-            width: 340px;    height:56px;
-            margin:0px 0 0 -14px;
-            position: relative;
-        }
-        .openPortBtm p{
-            display: block;
-            margin: 3px auto;
-            width: 180px;
-            height: 52px;
-            position: absolute;
-            top: 0;
-            left:90px;
-            font-size: 2em;
-            padding-top: 6px;
-            background-color: #fff;
-            text-align: center;
-        }
-        .openPortBtm p span{
-            font-size: .5em;
-            display: block;
-            margin-top: -4px;
-        }
-        .glyphicon-menu-hamburger{
-            color: #000;
-            font-size: 2em;
-            line-height: 2.25em;
-            margin-left: 20px;
-            transition: .25s all ease-in;
-        }
-        .glyphicon-menu-hamburger:hover{
-            cursor: pointer;
-            color: #808080;
-        }
-        .glyphicon-search{
-            color: #000;
-            font-size: 2em;
-            line-height: 2.25em;
-            position: absolute;
-            top: 2px; right: 20px;
-        }
-        .glyphicon-arrow-left{
-            color: #000;
-            font-size: 2em;
-            line-height: 2.25em;
-            position: absolute;
-            bottom: 4px; right: 10px;
-            width: 40px; height: 40px;
-            transition: all .25s ease-in;
-        }
-        .glyphicon-arrow-left:hover{
-            color: #45D7E8;
-            cursor: pointer;
-        }
-        .glyphicon-arrow-right{
-            color: #000;
-            font-size: 2em;
-            line-height: 2.25em;
-            position: absolute;
-            bottom: 4px; right: 10px;
-            width: 40px; height: 40px;
-            transition: all .25s ease-in;
-        }
-        .glyphicon-arrow-right:hover{
-            color: #45D7E8;
-            cursor: pointer;
-        }
-        .openGraphBtm{
-            background-color: #F2F2F2;
-            width: 100%;    height:56px;
-            margin:0px;
-            position: absolute;
-            bottom: 0; left: 0;
-            z-index: 10;
-        }
-        .openGraphBtm p{
-            display: block;
-            margin: 3px auto;
-            width: 180px;
-            height: 52px;
-            position: absolute;
-            top: 0;
-            left:80px;
-            font-size: 2em;
-            padding-top: 6px;
-            background-color: #fff;
-            text-align: center;
-        }
-        .openGraphBtm p span{
-            font-size: .5em;
-            display: block;
-            margin-top: -4px;
-        }
-        li .glyphicon-search {
-            color: #fff;
-            position: absolute;
-            top: 472px; right: 30px;
-        }
-        #hideMenu{
-            color: #000;
-            margin: 0 0 0 15px;
-            font-family:'Open Sans', sans-serif;
-            font-size: 1.25em;
-            transition: .25s all ease-in;
-            list-style: none;
-            padding-top: 6px;
-        }
-        .a{
-            display: inline-block;
-        }
-        .b{
-            display: none;
-        }
-        #hamClick{
-            position: absolute;
-            z-index: 15000;
-        }
-        #logout1{
-            text-decoration: none;
-            color: 808080;
-        }
-        #logout2{
-            text-decoration: none;
-            color: 808080;
-        }
+path {
+    stroke: #1C9CA5;
+    stroke-width: 3;
+    fill: none;
+}
 
-        #hideMenuMain{
-            color: #000;
-            margin: 0 0 0 -30px;
-            font-family:'Open Sans', sans-serif;
-            font-size: 1.25em;
-            line-height: 1.2em;
-            transition: .25s all ease-in;
-            list-style: none;
-            padding-top: 6px;
-        }
-        .aMain{
-            display: inline-block;
-        }
-        .bMain{
-            display: none;
-        }
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+.area {
+    fill: #45D7E8;
+      stroke-width: 0;
+}
+.shadow{
+    font-weight: 700;
+    font-size: 1.25em;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
 
-        #sidebar-wrapper{
-            height:627px;
-        }
-        .slideR{
-            margin-top:-300px;
-        }
-        .hide{
-            visibility: none;
-        }
-        #stockInIcon{
-            display: block;
-        }
-        .sidebar-nav li:nth-of-type(2){
-            font-size:18px;
-            color:#31B0D5
-        }
-        .sidebar-nav h2{
-            font-weight:bold;
-            font-size:1.5em;
-            color:#fff;
-        }
+
+/* open portfolio on mobile */
+
+.openPort{
+    background-color: #F2F2F2;
+    width: 100%;    height:56px;
+    margin: 0;
+}
+.portTop{
+    background-color: #F2F2F2;
+    width: 100%;    height:56px;
+    margin: 0;
+}
+.openPort i{
+    color:#3C3C3C;
+}
+.hideGraph{
+    position: absolute;
+    bottom: 10px;
+    left:50%;
+    font-size: 1em;
+    font-weight: 400;
+    width: 140px;
+}
+.openPortBtm{
+    background-color: #F2F2F2;
+    width: 100%;
+    height:56px;
+    margin:0;
+    position: relative;
+}
+.openPortBtm p{
+    display: block;
+    margin: 3px auto;
+    width: 180px;
+    height: 52px;
+    position: absolute;
+    top: 0;
+    left:24%;
+    font-size: 2em;
+    padding-top: 6px;
+    background-color: #fff;
+    text-align: center;
+    transition: .25s all ease-in;
+}
+.openPortBtm:hover{
+    background-color: #808080;
+    cursor: pointer;
+}
+.openGraphBtm:hover{
+    background-color: #808080;
+    cursor: pointer;
+}
+.openPortBtm p span{
+    font-size: .5em;
+    display: block;
+    margin-top: -4px;
+}
+.glyphicon-menu-hamburger{
+    position: absolute;
+    left: 20px; top: 3px;
+    color: #000;
+    font-size: 2em;
+    line-height: 2.25em;
+    transition: .25s all ease-in;
+}
+.glyphicon-menu-hamburger:hover{
+    cursor: pointer;
+    color: #808080;
+}
+.glyphicon-search{
+    color: #000;
+    font-size: 2em;
+    line-height: 2.25em;
+    position: absolute;
+    top: 2px; right: 3%;
+}
+.searchTop{
+    display: block;
+    width:60%;
+    left:25%;
+}
+.glyphicon-arrow-left{
+    color: #000;
+    font-size: 2em;
+    line-height: 2.25em;
+    position: absolute;
+    bottom: 4px; right: 10px;
+    width: 40px; height: 40px;
+    transition: all .25s ease-in;
+}
+.glyphicon-arrow-left:hover{
+    color: #45D7E8;
+    cursor: pointer;
+}
+.glyphicon-arrow-right{
+    color: #000;
+    font-size: 2em;
+    line-height: 2.25em;
+    position: absolute;
+    bottom: 4px; right: 10px;
+    width: 40px; height: 40px;
+    transition: all .25s ease-in;
+}
+.glyphicon-arrow-right:hover{
+    color: #45D7E8;
+    cursor: pointer;
+}
+.openGraphBtm{
+    background-color: #F2F2F2;
+    width: 100%;    height:56px;
+    margin:0px;
+    position: absolute;
+    bottom: 0; left: 0;
+    z-index: 10;
+}
+.openGraphBtm p{
+    display: block;
+    margin: 3px auto;
+    width: 180px;
+    height: 52px;
+    position: absolute;
+    top: 0;
+    left:80px;
+    font-size: 2em;
+    padding-top: 6px;
+    background-color: #fff;
+    text-align: center;
+}
+.openGraphBtm p span{
+    font-size: .5em;
+    display: block;
+    margin-top: -4px;
+}
+li .glyphicon-search {
+    color: #fff;
+    position: absolute;
+    top: 472px; right: 30px;
+}
+#hideMenu{
+    color: #000;
+    margin: 0 0 0 15px;
+    font-family:'Open Sans', sans-serif;
+    font-size: 1.25em;
+    transition: .25s all ease-in;
+    list-style: none;
+    padding-top: 6px;
+    position: absolute;
+    z-index: 15000;
+}
+.a{
+    display: inline-block;
+}
+.b{
+    display: none;
+}
+#hamClick{
+    position: absolute;
+    z-index: 16000;
+}
+
+
+#hideMenuMain{
+    color: #000;
+    margin: 0 0 0 17px;
+    font-family:'Open Sans', sans-serif;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    transition: .25s all ease-in;
+    list-style: none;
+    padding-top: 6px;
+}
+.aMain{
+    display: inline-block;
+}
+.bMain{
+    display: none;
+}
+
+#sidebar-wrapper{
+    height:625px;
+}
+.slideR{
+    margin-top:-300px;
+}
+.hide{
+    visibility: none;
+}
+#stockInIcon{
+    display: block;
+}
+.sidebar-nav li:nth-of-type(2){
+    font-size:18px;
+    color:#31B0D5
+}
+.sidebar-nav h2{
+    font-weight:bold;
+    font-size:1.5em;
+    color:#fff;
+}
+.logout{
+    text-decoration: none;
+    color: #808080;
+}
+.logout:hover{
+    color: #000;
+}
+.container-fluid{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+#viewProfile, #viewGraph{
+    color: #3C3C3C;
+}
+#viewProfile{
+    display: inline-block;
+    margin-top: 4px;
+}
