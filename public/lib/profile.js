@@ -116,7 +116,7 @@ function generateLineChart(container, arrayQuotes , range , flag) {
 		}
 		return outData;
 	};
-	var margin = {top:20, right:60, bottom:70, left:80};
+	var margin = {top:20, right:60, bottom:40, left:80};
   var width = $(container).width() - margin.left - margin.right;
   var height = $(container).height() - margin.top - margin.bottom;
 	//Callback
@@ -172,13 +172,13 @@ function generateLineChart(container, arrayQuotes , range , flag) {
 	.attr('class', 'y axis')
 	.call(yAxis);
 	svg.append('text')
-	.attr('transform', 'translate(' + (width / 2) + ',' + (height + margin.bottom - 30) + ')')
+	.attr('transform', 'translate(' + (width / 2) + ',' + (height + margin.bottom - 20) + ')')
 	.style('text-anchor', 'middle')
 	.attr('class', 'shadow')
 	.text('Date');
 	svg.append('text')
 	.attr('transform', 'rotate(-90)')
-	.attr('y', (30 - margin.left))
+	.attr('y', (20 - margin.left))
 	.attr('x', -(height / 2) + 20)
 	.attr('dy', '0.71em')
 	.style('text-anchor', 'end')
