@@ -2,6 +2,3 @@
 **/node_modules/
 **/*.sw?
 **/public/node_modules/
-**/credentials.js
-**/client_key_secret.txt
-

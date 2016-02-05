@@ -8,7 +8,6 @@ $('.stockWatch').click(function() {
 		console.log('Graph updated');
 	});
 });
-
 function updateStockInfo (processedDataObj) {
 	$('#stock-symbol').html( (processedDataObj.Symbol) );
 	$('#stock-open').html( (processedDataObj.Open) );
@@ -157,7 +156,3 @@ function generateLineChart(container , quoteData) {
 // 		}
 // 	}
 // };
-$.post('http://localhost:3000/profile', document.cookie, function(data) {
-	console.log('hahahaha');
-  console.log(data);
-});
