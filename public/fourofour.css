@@ -1,0 +1,41 @@
+html {
+  background: url(http://letmeaddvalue.com/assets/images/banner/will-stock-market-crash-on-13th-september-2015-elul-29---last-day-of-shemitah.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+body{
+  font-family: 'Open Sans', serif;
+}
+h1{
+  color: #fff;
+  font-size: 8em;
+  width: 240px;
+  display: block;
+  margin: 100px auto 0;
+}
+
+h3{
+  color: #fff;
+  font-size: 2em;
+  width: 280px;
+  display: block;
+  margin: 100px auto 0;
+}
+h4{
+  color: #fff;
+  font-size: 1.5em;
+  width: 180px;
+  display: block;
+  margin: 30px auto 0;
+}
+h4 a:visited{
+  color: #fff !important;
+}
+h4 a:hover{
+  color: red !important;
+}
+h4 a:active{
+  color: blue !important;
+}
