@@ -85,10 +85,10 @@ function processStockData(dataInc) {
 		var stockObject = {};
 		dataInc = JSON.parse(dataInc);
 		//Data we need once - Fed to title and stats on front page
-		stockObject.Symbol = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Symbol;
-		stockObject.Open = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Open;
-		stockObject.Volume = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Volume;
-		stockObject.Close = dataInc.query.results.quote[dataInc.query.results.quote.length-1].Close;
+		stockObject.Symbol = dataInc.query.results.quote[0].Symbol;
+		stockObject.Open = dataInc.query.results.quote[0].Open;
+		stockObject.Volume = dataInc.query.results.quote[0].Volume;
+		stockObject.Close = dataInc.query.results.quote[0].Close;
 		stockObject.StockName = dataInc.stockName;
 		var quoteData = [];
 		for (var i = 0; i < dataInc.query.results.quote.length; i++) {
