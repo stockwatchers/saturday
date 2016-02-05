@@ -1,3 +1,8 @@
+if($(window).width() < 400) {
+  $('#button-6M').hide();
+} else {
+  $('#button-6M').show();
+}
 if (parseInt($(window).height()) > parseInt($(window).width())) {
   $('html').css('overflow-y','hidden');
   $('#wrapper').height($(window).height());
@@ -30,6 +35,11 @@ $(window).resize(function() {
     $('#sidebar-wrapper').height($(window).height() - $('.openPort').height());
     $('#sidebar-wrapper').css('top', ($('.openPort').height() + 'px'));
     if($('#sidebar-wrapper').css('left') !== '0px') $('#sidebar-wrapper').css('left', ($(window).width() + 'px'));
+    if($(window).width() < 400) {
+      $('#button-6M').hide();
+    } else {
+      $('#button-6M').show();
+    }
     //for calling update graph after things have resized.  Taken from https://css-tricks.com/snippets/jquery/done-resizing-event/
     resizeTimer = setTimeout(function() {
       if($('#stockGraph').length) {
@@ -47,6 +57,11 @@ $(window).resize(function() {
     $('#sidebar-wrapper').height(900 - $('.openPort').height());
     $('#sidebar-wrapper').css('top', ($('.openPort').height() + 'px'));
     if($('#sidebar-wrapper').css('left') !== '0px') $('#sidebar-wrapper').css('left', ($(window).width() + 'px'));
+    if($(window).width() < 400) {
+      $('#button-6M').hide();
+    } else {
+      $('#button-6M').show();
+    }
     //for calling update graph after things have resized, this keeps the loading icon centered.  Taken from https://css-tricks.com/snippets/jquery/done-resizing-event/
     resizeTimer = setTimeout(function() {
       if($('#stockGraph').length) {
