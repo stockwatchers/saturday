@@ -3,8 +3,8 @@
 const chai = require('chai').use(require('chai-http'));
 const expect = chai.expect;
 const request = chai.request;
-const handleError = require( __dirname + '/../lib/handle_db_error');
 const server = require( __dirname + '/../server');
+const jwt = require('jsonwebtoken');
 
 //Model to test
 const Profile = require( __dirname + '/../models/user');
@@ -14,33 +14,31 @@ process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test_integration';
 
 var HOST = 'localhost:3000';
 
-describe('Authentication: The server...' , () => {
+describe('Integration Tests' , () => {
 
-  describe('Receiving a POST request' , () => {
-  //Close database and server instances when the tests are done
-    after( (done) => {
-      mongoose.connection.db.dropDatabase( () => {} );
-      done();
-    });
+  after( (done) => {
+    mongoose.connection.db.dropDatabase( () => {} );
+    done();
+  });
 
-    it('should receive a cookie confirmation after creating a user' , (done) => {
-
-      var testProfilePost = {
-        username: 'testProfile',
-        email: 'email@test.com',
-        password: 'testword'
-      };
-      request(HOST)
-        .post('/signup')
-        .send(JSON.stringify(testProfilePost))
-        .end( (err ,res) => {
-          expect( JSON.stringify(res.body) ).to.eql( '{"msg":"finished"}' );
-          done();
-        });
+  describe('POSTing to /signup should' , () => {
+    it('let you create a new user' , (done) => {
+    var testProfilePost = {
+      username: 'testProfile',
+      email: 'email@test.com',
+      password: 'testword'
+    };
+    request(HOST)
+      .post('/signup')
+      .send(JSON.stringify(testProfilePost))
+      .end( (err ,res) => {
+        expect( res.status ).to.eql(200);
+        done();
+      });
     });
   });
 
-  describe('GET requests should' , () => {
+  describe('POSTing to /signin should ' , () => {
     before( (done) => {
       var getProfile = new Profile();
       getProfile.username = "uniqueGetName";
@@ -51,15 +49,47 @@ describe('Authentication: The server...' , () => {
         done();
       });
     });
-    it('should let you log in.' , (done) => {
+    it('let you log in with valid credentials.' , (done) => {
       request(HOST)
-        .get('/signin')
-        .auth('uniqueGetName', 'testpassword')
+        .post('/signin')
+        .send('{"username":"uniqueGetName" , "password":"testpassword"}')
         .end( (err , res) => {
-          expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Successful Login'} ));
+          expect(res.status).to.eql(200);
           done();
       });
     });
   });
 
+  describe('POSTING to /validateToken' , () => {
+
+    var hashedPass;
+
+    before( (done) => {
+      var testProfile = new Profile();
+      hashedPass = testProfile.hashPassword('testword');
+      done();
+    });
+
+    it('should be happy with good credentials' , (done) =>{
+
+      var tokenObj = {};
+      Profile.find( {'username': 'testProfile'} , (err , profiles) =>{
+
+        tokenObj.authentication = profiles[0].authentication;
+        tokenObj.username = profiles[0].username;
+        tokenObj._id = profiles[0]._id;
+
+        var token = jwt.sign(tokenObj , 'changethis');
+
+        request(HOST)
+          .post('/validateToken')
+          .send(token)
+          .end( (err, res) => {
+            expect(res.status).to.eql(200);
+            done();
+          });
+      });
+
+  });
+  });
 });//End of describe
