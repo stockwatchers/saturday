@@ -8,8 +8,6 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser').json();
 const handleDBError = require( __dirname + '/../lib/handle_db_error');
 var stockLookup = require(__dirname + '/../lib/stockLookup').stockLookup;
-
-
 var profileRouter = module.exports = exports = express.Router();
 
 //This route also checks for verification of user
@@ -40,7 +38,6 @@ profileRouter.post('/profile', (req , res) => {
 });
 //We need to use auth.routes to direct users to this route
 profileRouter.post('/stockLookup', bodyParser, (req , res) => {
-
   req.body = '';
   req.on('data', function(chunk) {
     req.body += chunk;
@@ -50,5 +47,4 @@ profileRouter.post('/stockLookup', bodyParser, (req , res) => {
       res.end(data);
     });
   });
-
 });
