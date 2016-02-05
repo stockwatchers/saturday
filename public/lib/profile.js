@@ -1,3 +1,13 @@
+var uniqueGlobal1;  //Holds processed stock data
+var uniqueGlobal2;
+var uniqueGlobal3;
+var uniqueGlobal4;
+
+var flag1 = false;
+var flag2 = false;
+var flag3 = false;
+var flag4 = false;
+
 $('.stockWatch').click(function() {
 	var stock = $(this).text();
   stock = stock.substr(stock.indexOf('(') + 1,stock.length);
@@ -5,8 +15,43 @@ $('.stockWatch').click(function() {
   $.post('http://localhost:3000/stockLookup', stock, function (data) {
 		//WHERE WE UPDATE GRAPHS AND STUFF
 		updateStockInfo( processStockData(data) );
-		console.log('Graph updated');
+
+		uniqueGlobal1 = processStockData(data);
+		uniqueGlobal2 = processStockData(data);
+		uniqueGlobal3 = processStockData(data);
+		uniqueGlobal4 = processStockData(data);
+
+		flag1 = false;
+		flag2 = false;
+		flag3 = false;
+		flag4 = false;
+
+		// console.log('Graph updated');
 	});
+});
+
+$('#button-1M').click( function(){
+		var data1 = uniqueGlobal1.quotes;
+		generateLineChart('#body', data1, 21 , flag1);
+		flag1 = true;
+});
+
+$('#button-3M').click( function(){
+		var data2 = uniqueGlobal2.quotes;
+		generateLineChart('#body', data2, 63, flag2);
+		flag2 = true;
+});
+
+$('#button-6M').click( function(){
+		var data3 = uniqueGlobal3.quotes;
+		generateLineChart('#body', data3, 126 , flag3);
+		flag3 = true;
+});
+
+$('#button-1Y').click( function(){
+		var data4 = uniqueGlobal4.quotes;
+		generateLineChart('#body', data4, 251, flag4);
+		flag4 = true;
 });
 
 function updateStockInfo (processedDataObj) {
@@ -16,8 +61,7 @@ function updateStockInfo (processedDataObj) {
 	$('#stock-close').html( (processedDataObj.Close) );
 	$('#stock-name').text(processedDataObj.StockName);
 
-	$('#stockGraph').remove();  //Clean out old graph data
-	generateLineChart('#body' , processedDataObj.quotes); //Generate graph
+	generateLineChart('#body' , processedDataObj.quotes , 252); //Generate graph
 }
 
 function processStockData ( dataInc ) {
@@ -38,18 +82,33 @@ function processStockData ( dataInc ) {
 			}
 			quoteData.push(quoteJSON);
 		}
-		stockObject.quotes = quoteData;
+		stockObject.quotes = quoteData;		//Array with JSON
 
-		console.log('Data Processed');
+		// console.log('Data Processed');
 		return stockObject;
 	} catch (e) {
 		console.log('Error: ' + e);
 	}
 };
 
-function generateLineChart(container , quoteData , range) {
+function generateLineChart(container , arrayQuotes , range , flag) {
+	$('#stockGraph').remove();  //Clean out old graph data
 
-  var margin = {top:20, right:20, bottom:40, left:60};
+	//Used to adjust size of data for graph compilation
+	var quoteData;
+	quoteData = chartDataProcess(arrayQuotes);
+
+	function chartDataProcess ( data ){
+		var outData = [];
+		for (var i = 0; i < range; i++) {
+			outData.push(data[i]);
+		}
+		return outData;
+	};
+
+	console.log('Important info here: ' + quoteData.length);
+
+	var margin = {top:20, right:20, bottom:40, left:60};
   var width = 350 - margin.left - margin.right;
   var height = 293 - margin.top - margin.bottom;
 
@@ -73,11 +132,12 @@ function generateLineChart(container , quoteData , range) {
 						.append('g')
 	          .attr('transform', 'translate (' + margin.left + ',' + margin.top + ')');
 
-	quoteData.forEach(function(d) {
-			d.date = parseDate(d.date);
-			d.close = parseFloat(d.close);
-	});
-
+	  if (!flag){
+			quoteData.forEach( function(d) {
+					d.date = parseDate(d.date);					//Tries to split non-array on second run
+					d.close = parseFloat(d.close);
+			});
+		}
 	var area = d3.svg.area()
 	           .x(function(d) {
 	              return x(d.date);
@@ -101,6 +161,7 @@ function generateLineChart(container , quoteData , range) {
 	.datum(quoteData)
 	.attr('class', 'area')
 	.attr('d', area);
+
 	//etc.
 	svg.append('g')
 	.attr('class', 'x axis')
