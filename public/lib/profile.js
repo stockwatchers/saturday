@@ -1,4 +1,4 @@
-$.post('http://localhost:3000/validateToken', document.cookie, function(data) {
+$.post('https://stockpoppers.herokuapp.com/validateToken', document.cookie, function(data) {
   $('#username').text(data);
 });
 $('#openingSymbolParenthesis').hide();
@@ -26,7 +26,7 @@ function updateGraph(stock, parseStockName) {
 	$('#stockGraphContainer').append($('<img id="loadingGraphImage" src="/img/ajax-loader.gif" alt="Loading" style="width:31px;height:31px;margin-left:'+(($('#stockGraphContainer').width() / 2) - (31 / 2))+'px;margin-top:'+(($('#stockGraphContainer').height() / 2) - (31 / 2))+'px;">'));
 	$('.selected').removeClass('selected');
 	$('#button-1Y').addClass('selected');
-  $.post('http://localhost:3000/stockLookup', stock, function (data) {
+  $.post('https://stockpoppers.herokuapp.com/stockLookup', stock, function (data) {
 		updateStockInfo(processStockData(data));
 		uniqueGlobal1 = processStockData(data);
 		uniqueGlobal2 = processStockData(data);
