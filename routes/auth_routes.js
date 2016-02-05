@@ -120,7 +120,7 @@ authRouter.post('/validateToken', function(req, res) {
       console.log();
       return res.status(401).end(); //Bad Token
     }
-    Profile.findOne({_id: decoded._id}, (err, user) => {
+    Profile.findOne({_id: decoded.id}, (err, user) => {
       if(err) {
         console.log('Error during Profile.findOne.');
         console.log('Token Validation Request Finished');
