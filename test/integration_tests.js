@@ -3,8 +3,8 @@
 const chai = require('chai').use(require('chai-http'));
 const expect = chai.expect;
 const request = chai.request;
-const handleError = require( __dirname + '/../lib/handle_db_error');
 const server = require( __dirname + '/../server');
+const jwt = require('jsonwebtoken');
 
 //Model to test
 const Profile = require( __dirname + '/../models/user');
@@ -14,33 +14,31 @@ process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test_integration';
 
 var HOST = 'localhost:3000';
 
-describe('Integration Tests: The server...' , () => {
+describe('Integration Tests' , () => {
 
-  describe('Receiving a POST request' , () => {
-  //Close database and server instances when the tests are done
-    after( (done) => {
-      mongoose.connection.db.dropDatabase( () => {} );
-      done();
-    });
+  after( (done) => {
+    mongoose.connection.db.dropDatabase( () => {} );
+    done();
+  });
 
-    it('should receive a status 200 after posting to /signup' , (done) => {
-
-      var testProfilePost = {
-        username: 'testProfile',
-        email: 'email@test.com',
-        password: 'testword'
-      };
-      request(HOST)
-        .post('/signup')
-        .send(JSON.stringify(testProfilePost))
-        .end( (err ,res) => {
-          expect( res.status ).to.eql(200);
-          done();
-        });
+  describe('POSTing to /signup should' , () => {
+    it('let you create a new user' , (done) => {
+    var testProfilePost = {
+      username: 'testProfile',
+      email: 'email@test.com',
+      password: 'testword'
+    };
+    request(HOST)
+      .post('/signup')
+      .send(JSON.stringify(testProfilePost))
+      .end( (err ,res) => {
+        expect( res.status ).to.eql(200);
+        done();
+      });
     });
   });
 
-  describe('POST requests should ' , () => {
+  describe('POSTing to /signin should ' , () => {
     before( (done) => {
       var getProfile = new Profile();
       getProfile.username = "uniqueGetName";
@@ -51,7 +49,7 @@ describe('Integration Tests: The server...' , () => {
         done();
       });
     });
-    it('let you log in.' , (done) => {
+    it('let you log in with valid credentials.' , (done) => {
       request(HOST)
         .post('/signin')
         .send('{"username":"uniqueGetName" , "password":"testpassword"}')
@@ -62,4 +60,36 @@ describe('Integration Tests: The server...' , () => {
     });
   });
 
+  describe('POSTING to /validateToken' , () => {
+
+    var hashedPass;
+
+    before( (done) => {
+      var testProfile = new Profile();
+      hashedPass = testProfile.hashPassword('testword');
+      done();
+    });
+
+    it('should be happy with good credentials' , (done) =>{
+
+      var tokenObj = {};
+      Profile.find( {'username': 'testProfile'} , (err , profiles) =>{
+
+        tokenObj.authentication = profiles[0].authentication;
+        tokenObj.username = profiles[0].username;
+        tokenObj._id = profiles[0]._id;
+
+        var token = jwt.sign(tokenObj , 'changethis');
+
+        request(HOST)
+          .post('/validateToken')
+          .send(token)
+          .end( (err, res) => {
+            expect(res.body).to.exist();
+            done();
+          });
+      });
+
+  });
+  });
 });//End of describe
