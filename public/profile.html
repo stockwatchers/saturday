@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,149 +8,97 @@
     <meta name="author" content="">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="lib/vendor/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <script src="/lib/validateToken.js"></script>
     <title>StockPop</title>
-    <!--  Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,300|Coda' rel='stylesheet' type='text/css'>
-
-    <!-- Bootstrap Core CSS -->
     <link href="lib/vendor/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Sidebar CSS -->
     <link href="lib/vendor/simple-sidebar.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/profile.css">
-
-    <!-- jQuery CSS -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-</head>
-
-
-<body>
-
+  </head>
+  <body>
     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-
-            <div class="portTop">
-                <span class="glyphicon glyphicon-menu-hamburger" id="hamClick"></span>
-                    <ul id="hideMenu">
-                        <li><a href="#" id="logout1">Logout</a></li>
-                        <li><a href="#"  id="viewGraph">View Graph</a></li>
-                    </ul>
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand">
+            <h1>stock<span>pop</span></h1>
+          </li>
+          <li>
+            <a href="#"></a>
+          </li>
+          <li>
+            <h2>USER</h2>
+            <h2>Portfolio Overview</h2>
+          </li>
+          <li>
+            <span class="stockWatch">FACEBOOK (FB)</span>
+          </li>
+          <li>
+            <span class="stockWatch">APPLE (AAPL)</span>
+          </li>
+          <li>
+            <span class="stockWatch">TESLA (TSLA)</span>
+          </li>
+          <li>
+            <span class="stockWatch">GOOGLE (GOOG)</span>
+          </li>
+          <li>
+            <span class="stockWatch">CATERPILLAR (CAT)</span>
+          </li>
+          <!-- <li>
+            <input type="text" placeholder="FIND STOCK TO WATCH" class="stockInPort">
+            <span class="glyphicon glyphicon-search"></span>
+          </li> -->
+        </ul>
+        <div class="openGraphBtm">
+          <span class="glyphicon glyphicon-arrow-right"></span>
+          <p>OPEN <br><span>GRAPH</span></p>
+        </div>
+      </div> <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row graph graphRel" id="body">
+            <div class="openPort">
+              <span class="glyphicon glyphicon-menu-hamburger" id="hamClickMain"></span>
+              <ul id="hideMenuMain">
+                <li><span id="logout">Logout</span></li>
+              </ul>
+              <!-- <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
+              <span class="glyphicon glyphicon-search stockInIcon"></span> -->
             </div>
-
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <h1>Stock<span>POP</span></h1>
-                </li>
-                <li>
-                    <a href="#"></a>
-                </li>
-                <li>
-                    <h2>USER</h2>
-                    <h2>Portfolio Overview</h2>
-                </li>
-                <li>
-                    <a href="#" class="stockWatch"> FACEBOOK (FB)</a>
-                </li>
-                <li>
-                    <a href="#" class="stockWatch"> APPLE (AAPL)</a>
-                </li>
-                <li>
-                    <a href="#" class="stockWatch"> TESLA (TSLA)</a>
-                </li>
-                <li>
-                    <a href="#" class="stockWatch"> GOOGLE (GOOG)</a>
-                </li>
-                <li>
-                    <a href="#" class="stockWatch"> MICROSOFT (MS)</a>
-                </li>
-                <li>
-                    <input type="text" placeholder="FIND STOCK TO WATCH" class="stockInPort">
-                    <span class="glyphicon glyphicon-search"></span>
-                </li>
-            </ul>
-
-            <div class="openGraphBtm">
-                <span class="glyphicon glyphicon-arrow-right"></span>
-                <p>OPEN <br><span>GRAPH</span></p>
+            <div class="page-header">
+              <h1><span id="stock-name">TESLA</span>(<span id="stock-symbol">TSLA</span>)</h1>
             </div>
-
-        </div> <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row graph graphRel" id="body">
-                    <div class="openPort">
-                        <span class="glyphicon glyphicon-menu-hamburger" id="hamClickMain"></span>
-
-                            <ul id="hideMenuMain">
-                                <li><a href="#" id="logout2">Logout</a></li>
-                                <li><a href="#"  id="viewProfile">View Profile</a></li>
-                            </ul>
-
-                            <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
-                            <span class="glyphicon glyphicon-search stockInIcon"></span>
-
-                    </div>
-                    <!-- Feed a lot of jQuery stuff into here -->
-                    <div class="page-header">
-                      <h1>
-                        <span id="stock-name">TESLA</span>
-                        (<span id="stock-symbol">TSLA</span>) <button>hide graph</button></h1>
-                    </div>
-
-                    <p>OPEN: <span id="stock-open">35.26</span></p>
-                    <p>HI: <span id="stock-hi">38.47</span></p>
-                    <p>LOW: <span id="stock-low">35.26</span></p>
-                    <p>CLOSE: <span id="stock-close">36.47</span></p>
-                    <p>VOLUME: <span id="stock-volume">232323</span></p>
-                    <p>CHANGE: <span id="stock-change">1.21</span></p>
-
-                    <!-- load the d3.js library -->
-                    <script src="http://d3js.org/d3.v3.min.js"></script>
-                    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.2.5/svg.min.js" type="text/javascript">
-                    </script> -->
-                    <!-- <div id="demo"></div> -->
-                    <!-- Create Graph Code-->
-                    <!-- <script src="lib/generate_graph.js"></script> -->
-                    <div class="range">
-                       <button>1D</button><button>5D</button><button>1M</button><button>1Y</button>
-                    </div>
-                            <p>OPEN: <span>35.26</span></p><p>HI: <span>38.47</span></p><p>LOW: <span>35.26</span></p><p>CLOSE: <span>36.47</span> </p><p>CHANGE: <span>1.21</span></p>
-
-                            <div class="rangeWrap">
-                                <div class="range">
-                                   <button>1D</button><button>5D</button><button>1M</button><button>1Y</button>
-                                </div>
-                            </div>
-                </div>
-                            <div class="openPortBtm">
-                                <span class="glyphicon glyphicon-arrow-left"></span>
-                                <p>OPEN <br><span>PORTFOLIO</span></p>
-                            </div>
+            <div id="stockGraph"></div>
+            <div class="rangeWrap">
+              <div class="range">
+                <button>1D</button><button>5D</button><button>1M</button><button>1Y</button>
+              </div>
+              <div class="stockTickers">
+                <p>OPEN: <span id="stock-open">35.26</span></p>
+                <p>HI: <span id="stock-hi">38.47</span></p>
+                <p>LOW: <span id="stock-low">35.26</span></p>
+                <p>CLOSE: <span id="stock-close">36.47</span></p>
+                <p>VOLUME: <span id="stock-volume">232323</span></p>
+                <p>CHANGE: <span id="stock-change">1.21</span></p>
+              </div>
             </div>
-
-        </div><!-- /#page-content-wrapper -->
-
+          </div>
+          <div class="openPortBtm">
+            <p>OPEN</br><span>PORTFOLIO</span></p><span class="glyphicon glyphicon-arrow-left"></span>
+          </div>
+        </div>
+      </div><!-- /#page-content-wrapper -->
     </div><!-- /#wrapper -->
-
     <script src="lib/profile.js"></script>
     <script src="lib/logout.js"></script>
     <script src="lib/scripts.js"></script>
-    </body>
-
+    <script src="lib/ui.js"></script>
+  </body>
 </html>
