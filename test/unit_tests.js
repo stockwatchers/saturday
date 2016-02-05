@@ -14,7 +14,7 @@ process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test_unit';
 
 var HOST = 'localhost:3000';
 
-describe('Authentication: The server...' , () => {
+describe('Unit Tests: The server...' , () => {
   describe('Receiving a POST request' , () => {
   //Close database and server instances when the tests are done
     after( (done) => {
@@ -23,17 +23,16 @@ describe('Authentication: The server...' , () => {
     });
 
     it('should throw a invalid name or password error' , (done) => {
-
       var testProfilePost = {
-        username: 'short',
+        username: '',
         email: 'emailshort@test.com',
-        password: 'short'
+        password: ''
       };
-
       request(HOST)
         .post('/signup')
-        .send(JSON.stringify(testProfilePost))
+        .send(testProfilePost)
         .end( (err , res) => {
+          expect(res.status).to.eql(400);
           expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Invalid username or password'} ));
           done();
         });
@@ -101,8 +100,8 @@ describe('Authentication: The server...' , () => {
 
     it('should throw errors if no user' , (done) => {
       request(HOST)
-        .get('/signin')
-        .auth('Warren Buffet' , 'testpassword')
+        .post('/signin')
+        .send({})
         .end( (err , res) => {
           expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'NONE SHALL PASS!'} ));
           done();
@@ -110,9 +109,15 @@ describe('Authentication: The server...' , () => {
       });
 
     it('should throw errors if passwords do not match' , (done) => {
+
+      var dumbestProfile = {
+        username: 'uniqueGetName',
+        email: 'email1@test.com',
+        password: 'wrongpass'
+      };
       request(HOST)
-        .get('/signin')
-        .auth('uniqueGetName' , 'wrongpassword')
+        .post('/signin')
+        .send( JSON.stringify(dumbestProfile) )
         .end( (err , res) => {
           expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Password Mismatch'} ));
           done();

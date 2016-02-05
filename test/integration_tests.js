@@ -14,7 +14,7 @@ process.env.MONGOLAB_URI = 'mongodb://localhost:/profile_test_integration';
 
 var HOST = 'localhost:3000';
 
-describe('Authentication: The server...' , () => {
+describe('Integration Tests: The server...' , () => {
 
   describe('Receiving a POST request' , () => {
   //Close database and server instances when the tests are done
@@ -23,7 +23,7 @@ describe('Authentication: The server...' , () => {
       done();
     });
 
-    it('should receive a cookie confirmation after creating a user' , (done) => {
+    it('should receive a status 200 after posting to /signup' , (done) => {
 
       var testProfilePost = {
         username: 'testProfile',
@@ -34,13 +34,13 @@ describe('Authentication: The server...' , () => {
         .post('/signup')
         .send(JSON.stringify(testProfilePost))
         .end( (err ,res) => {
-          expect( JSON.stringify(res.body) ).to.eql( '{"msg":"finished"}' );
+          expect( res.status ).to.eql(200);
           done();
         });
     });
   });
 
-  describe('GET requests should' , () => {
+  describe('POST requests should ' , () => {
     before( (done) => {
       var getProfile = new Profile();
       getProfile.username = "uniqueGetName";
@@ -51,12 +51,12 @@ describe('Authentication: The server...' , () => {
         done();
       });
     });
-    it('should let you log in.' , (done) => {
+    it('let you log in.' , (done) => {
       request(HOST)
-        .get('/signin')
-        .auth('uniqueGetName', 'testpassword')
+        .post('/signin')
+        .send('{"username":"uniqueGetName" , "password":"testpassword"}')
         .end( (err , res) => {
-          expect( JSON.stringify(res.body) ).to.eql(JSON.stringify( {msg: 'Successful Login'} ));
+          expect(res.status).to.eql(200);
           done();
       });
     });
