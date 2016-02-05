@@ -134,7 +134,7 @@ authRouter.post('/validateToken', function(req, res) {
       console.log('Found the following user data associated with the id value derived from the JWT specified by the client: ' + user);
       console.log('Token Validation Request Finished');
       console.log();
-      res.status(200).end('success');
+      res.status(200).end(user.username);
     });
   });
 });

@@ -14,7 +14,7 @@ profileRouter.post('/stockLookup', bodyParser, (req , res) => {
     req.body += chunk;
   });
   req.on('end', function() {
-    stockLookup(req.body, '2015-02-01', function(data) {
+    stockLookup(req.body, function(data) {
       res.end(data);
     });
   });
