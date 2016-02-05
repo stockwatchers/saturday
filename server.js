@@ -12,6 +12,9 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/stockwatcher_d
 app.use(express.static(__dirname + '/public'));
 app.use(profileRouter);
 app.use(authRouter);
+app.use(function(req, res) {
+	res.sendFile(__dirname + '/public/fourofour.html');
+});
 
 var portUsed = process.env.PORT || 3000;
 
