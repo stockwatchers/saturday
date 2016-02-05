@@ -85,7 +85,7 @@ describe('Integration Tests' , () => {
           .post('/validateToken')
           .send(token)
           .end( (err, res) => {
-            expect(res.body).to.exist();
+            expect(res.status).to.eql(200);
             done();
           });
       });

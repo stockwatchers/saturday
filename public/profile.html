@@ -33,7 +33,7 @@
             <a href="#"></a>
           </li>
           <li>
-            <h2>USER</h2>
+            <h2 id="username">USER</h2>
             <h2>Portfolio Overview</h2>
           </li>
           <li>
@@ -47,9 +47,6 @@
           </li>
           <li>
             <span class="stockWatch">GOOGLE (GOOG)</span>
-          </li>
-          <li>
-            <span class="stockWatch">CATERPILLAR (CAT)</span>
           </li>
           <!-- <li>
             <input type="text" placeholder="FIND STOCK TO WATCH" class="stockInPort">
@@ -69,13 +66,11 @@
               <ul id="hideMenuMain">
                 <li><span id="logout">Logout</span></li>
               </ul>
-              <!-- <input type="text" placeholder="FIND STOCK TO WATCH" class="stockIn">
-              <span class="glyphicon glyphicon-search stockInIcon"></span> -->
             </div>
             <div class="page-header">
-              <h1><span id="stock-name">TESLA</span>(<span id="stock-symbol">TSLA</span>)</h1>
+              <h1><span id="stock-name"></span><span id="openingSymbolParenthesis"> (</span><span id="stock-symbol"></span><span id="closingSymbolParenthesis">)</span></h1>
             </div>
-            <div id="stockGraph"></div>
+            <div id="stockGraphContainer"></div>
             <div class="rangeWrap">
               <div class="range">
                  <button class="button-range" id="button-1M">1M</button>
@@ -84,11 +79,9 @@
                  <button class="button-range" id="button-1Y">1Y</button>
               </div>
               <div class="stockTickers">
-                <p>OPEN: <span id="stock-close"></span></p>
-                <p>HI: <span id="stock-hi"></span></p>
-                <p>LOW: <span id="stock-low"></span></p>
+                <p>OPEN: <span id="stock-open"></span></p>
+                <p>VOLUME: <span id="stock-volume" class="tradeVolume"></span></p>
                 <p>CLOSE: <span id="stock-close"></span> </p>
-                <p>CHANGE: <span id="stock-change"></span></p>
               </div>
             </div>
           </div>

@@ -14,7 +14,6 @@ profileSchema = new mongoose.Schema({
   portfolio: { type: Array , default: ['.DJI'] }
 });
 
-
 profileSchema.methods.hashPassword = function(password) {
   var hash = this.authentication.password = bcrypt.hashSync(password, 8);
   return hash;
