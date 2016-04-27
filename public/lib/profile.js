@@ -1,3 +1,4 @@
+//$.post('http://localhost:3000/validateToken', document.cookie, function(data) {
 $.post('https://stockpoppers.herokuapp.com/validateToken', document.cookie, function(data) {
   $('#username').text(data);
 });
@@ -26,6 +27,7 @@ function updateGraph(stock, parseStockName) {
 	$('#stockGraphContainer').append($('<img id="loadingGraphImage" src="/img/ajax-loader.gif" alt="Loading" style="width:31px;height:31px;margin-left:'+(($('#stockGraphContainer').width() / 2) - (31 / 2))+'px;margin-top:'+(($('#stockGraphContainer').height() / 2) - (31 / 2))+'px;">'));
 	$('.selected').removeClass('selected');
 	$('#button-1Y').addClass('selected');
+  //$.post('http://localhost:3000/stockLookup', stock, function (data) {
   $.post('https://stockpoppers.herokuapp.com/stockLookup', stock, function (data) {
 		updateStockInfo(processStockData(data));
 		uniqueGlobal1 = processStockData(data);
@@ -104,12 +106,12 @@ function processStockData(dataInc) {
 		console.log('Error: ' + e);
 	}
 };
-function generateLineChart(container, arrayQuotes , range , flag) {
+function generateLineChart(container, arrayQuotes, range, flag) {
 	$('#stockGraph').remove();
 	//Used to adjust size of data for graph compilation
 	var quoteData;
 	quoteData = chartDataProcess(arrayQuotes);
-	function chartDataProcess ( data ){
+	function chartDataProcess(data) {
 		var outData = [];
 		for (var i = 0; i < range; i++) {
 			outData.push(data[i]);
@@ -125,9 +127,10 @@ function generateLineChart(container, arrayQuotes , range , flag) {
   var y = d3.scale.linear().range([height, 0]);
 	//Adjust number of ticks on graph
 	//Months
-  var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(4);
+  var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(6);
 	//Value
 	var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
+
   var valueLine = d3.svg.line().x(function(d){return x( d.date );}).y(function(d){return y( d.close );});
 	$('#loadingGraphImage').remove();
   var svg = d3.select(container).append('svg')
@@ -152,9 +155,11 @@ function generateLineChart(container, arrayQuotes , range , flag) {
 	          });
 	//Provide ranges to X and Y
 	x.domain(d3.extent(quoteData, function(d) { return d.date; }));
-	y.domain([0, d3.max(quoteData, function(d) { return d.close; })]);
+	//y.domain([0, d3.max(quoteData, function(d) { return d.close; })]);
+	y.domain([d3.min(quoteData, function(d) { return d.close - d.close % 10; }), d3.max(quoteData, function(d) { return d.close + (10 - d.close % 10) + 4; })]);
 	//Used to render graph data
 	//Draw Lines
+
 	svg.append('path')
 	.attr('class', 'line')
 	.attr('d', valueLine(quoteData));
